@@ -1,0 +1,127 @@
+{
+  "version": "0.1.0",
+  "name": "staking_platform",
+  "instructions": [
+    {
+      "name": "InitConfigAccount",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Mint Account"
+          ]
+        },
+        {
+          "name": "globalConfigAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Global Config Account (PDA)"
+          ]
+        },
+        {
+          "name": "treasuryAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Treasury Account (PDA)"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token Program"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "protocolFeeRate",
+          "type": "u16"
+        },
+        {
+          "name": "minStakeAmount",
+          "type": "u64"
+        },
+        {
+          "name": "maxPools",
+          "type": "u32"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 0
+      }
+    }
+  ],
+  "accounts": [
+    {
+      "name": "GlobalConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "treasury",
+            "type": "publicKey"
+          },
+          {
+            "name": "protocolFeeRate",
+            "type": "u16"
+          },
+          {
+            "name": "maxPools",
+            "type": "u32"
+          },
+          {
+            "name": "minStakeAmount",
+            "type": "u64"
+          },
+          {
+            "name": "emergencyPause",
+            "type": "bool"
+          },
+          {
+            "name": "totalPoolsCreated",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "treasuryBump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "origin": "shank",
+    "address": "FaBZMNodNrPzMhi5mQ5nd7r6wasmV1fK6BMUrQyYFCsV"
+  }
+}

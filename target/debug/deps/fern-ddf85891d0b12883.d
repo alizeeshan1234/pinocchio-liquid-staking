@@ -1,0 +1,10 @@
+/Users/mohammedzeeshan/Desktop/staking-platform/target/debug/deps/libfern-ddf85891d0b12883.rmeta: /Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/lib.rs /Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/builders.rs /Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/errors.rs /Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/log_impl.rs /Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/colors.rs /Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/meta.rs
+
+/Users/mohammedzeeshan/Desktop/staking-platform/target/debug/deps/fern-ddf85891d0b12883.d: /Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/lib.rs /Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/builders.rs /Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/errors.rs /Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/log_impl.rs /Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/colors.rs /Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/meta.rs
+
+/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/lib.rs:
+/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/builders.rs:
+/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/errors.rs:
+/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/log_impl.rs:
+/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/colors.rs:
+/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fern-0.6.2/src/meta.rs:

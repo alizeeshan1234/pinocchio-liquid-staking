@@ -1,0 +1,11 @@
+prefix=/Users/mohammedzeeshan/Desktop/staking-platform/target/debug/build/openssl-sys-5feb8722cfec470a/out/openssl-build/install
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include 
+
+Name: OpenSSL-libssl
+Description: Secure Sockets Layer and cryptography libraries
+Version: 3.5.2
+Requires.private: libcrypto
+Libs: -L${libdir} -lssl
+Cflags: -I${includedir}
