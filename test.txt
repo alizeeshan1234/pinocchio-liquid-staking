@@ -26,7 +26,7 @@
           "isMut": true,
           "isSigner": false,
           "docs": [
-            "Global Config Account"
+            "Global Config Account (PDA)"
           ]
         },
         {
@@ -34,7 +34,7 @@
           "isMut": true,
           "isSigner": false,
           "docs": [
-            "Treasury account"
+            "Treasury Account (PDA)"
           ]
         },
         {
@@ -71,68 +71,6 @@
       "discriminant": {
         "type": "u8",
         "value": 0
-      }
-    },
-    {
-      "name": "UpdateAuthority",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true,
-          "docs": [
-            "Current authority account"
-          ]
-        },
-        {
-          "name": "globalConfigAccount",
-          "isMut": true,
-          "isSigner": false,
-          "docs": [
-            "Global Config Account"
-          ]
-        }
-      ],
-      "args": [
-        {
-          "name": "newAuthority",
-          "type": "publicKey"
-        }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 1
-      }
-    },
-    {
-      "name": "UpdateProtocolFee",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true,
-          "docs": [
-            "Authority account"
-          ]
-        },
-        {
-          "name": "globalConfigAccount",
-          "isMut": true,
-          "isSigner": false,
-          "docs": [
-            "Global Config Account"
-          ]
-        }
-      ],
-      "args": [
-        {
-          "name": "newProtocolFeeRate",
-          "type": "u16"
-        }
-      ],
-      "discriminant": {
-        "type": "u8",
-        "value": 2
       }
     }
   ],

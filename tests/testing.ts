@@ -238,4 +238,85 @@ describe('Staking Program Tests - Debug Version', function () {
             throw error;
         }
     });
+
+    it("Process Update Authority", async () => {
+        let newAuthority = provider.wallet.publicKey;
+        let instructionData = Buffer.concat([
+            newAuthority.toBuffer()
+        ]);
+
+        const finalInstructionData = Buffer.concat([
+            Buffer.from([1]),
+            instructionData
+        ]);
+
+        const instruction = new TransactionInstruction({
+            programId: programId,
+            keys: [
+                { pubkey: provider.wallet.publicKey, isSigner: true, isWritable: true },     // authority
+                { pubkey: globalConfigAccountPda, isSigner: false, isWritable: true },       // global_config_account
+            ],
+            data: finalInstructionData
+        });
+
+        const transaction = new Transaction().add(instruction);
+
+        const { blockhash } = await connection.getLatestBlockhash();
+        transaction.recentBlockhash = blockhash;
+        transaction.feePayer = provider.wallet.publicKey;
+
+        console.log("Simulating transaction...");
+        try {
+            const simulationResult = await connection.simulateTransaction(transaction);
+            console.log("Simulation result:", simulationResult);
+        } catch (simError: any) {
+            console.error("Simulation failed:", simError);
+            console.error("Simulation logs:", simError.logs);
+        }
+
+        const sig = await provider.sendAndConfirm(transaction, []);
+        console.log("✅ Transaction Signature:", sig); 
+    });
+
+    it("Process Update Protocol Fees", async () => {
+        const protocolFeeRate = 1000;
+        const protocolFeeRateBuffer = Buffer.alloc(2);
+        protocolFeeRateBuffer.writeUInt16LE(protocolFeeRate);
+
+        const instructionData = Buffer.concat([
+            protocolFeeRateBuffer
+        ]);
+
+        const finalInstructionData = Buffer.concat([
+            Buffer.from([2]),
+            instructionData
+        ]);
+
+        const instruction = new TransactionInstruction({
+            programId: programId,
+            keys: [
+                { pubkey: provider.wallet.publicKey, isSigner: true, isWritable: true },     // authority
+                { pubkey: globalConfigAccountPda, isSigner: false, isWritable: true },       // global_config_account
+            ],
+            data: finalInstructionData
+        });
+
+        const transaction = new Transaction().add(instruction);
+
+        const { blockhash } = await connection.getLatestBlockhash();
+        transaction.recentBlockhash = blockhash;
+        transaction.feePayer = provider.wallet.publicKey;
+
+        console.log("Simulating transaction...");
+        try {
+            const simulationResult = await connection.simulateTransaction(transaction);
+            console.log("Simulation result:", simulationResult);
+        } catch (simError: any) {
+            console.error("Simulation failed:", simError);
+            console.error("Simulation logs:", simError.logs);
+        }
+
+        const sig = await provider.sendAndConfirm(transaction, []);
+        console.log("✅ Transaction Signature:", sig); 
+    })
 });

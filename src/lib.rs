@@ -21,6 +21,8 @@ pub fn process_instruction(
 
     match StakingInstructions::try_from(ix_disc)? {
         StakingInstructions::InitConfigAccount => instructions::init_global_config::process_initialize_global_config(accounts, instruction_data)?,
+        StakingInstructions::UpdateAuthority => instructions::update_global_config::process_update_authority(accounts, instruction_data)?,
+        StakingInstructions::UpdateProtocolFee => instructions::update_global_config::process_update_protocol_fee(accounts, instruction_data)?,
     };
 
     Ok(())
