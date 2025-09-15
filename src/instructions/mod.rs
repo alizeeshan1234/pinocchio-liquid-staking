@@ -23,6 +23,20 @@ pub enum StakingInstructions {
     #[account(0, writable, signer, name = "authority", desc = "Account that pays for account creation")]
     #[account(1, writable, name = "global_config_account", desc = "GLobal Config Account")]
     UpdateProtocolFee = 2,
+
+    #[account(0, writable, name = "authority", desc = "Account that pays for account creation")]
+    #[account(1, writable, signer, name = "creator", desc = "Account that pays for account creation")]
+    #[account(2, name = "stake_token_mint", desc = "Account that pays for account creation")]
+    #[account(3, name = "reward_token_mint", desc = "Account that pays for account creation")]
+    #[account(4, name = "stake_token_vault", desc = "Account that pays for account creation")]
+    #[account(5, name = "reward_token_vault", desc = "Account that pays for account creation")]
+    #[account(6, writable, name = "staking_pool_account", desc = "Account that pays for account creation")]
+    #[account(7, writable, name = "global_config_account", desc = "Account that pays for account creation")]
+    #[account(8, writable, name = "liquid_stake_mint", desc = "Liquid stake mint")]
+    #[account(9, name = "price_feed_account", desc = "Price feed account")]
+    #[account(10, name = "system_program", desc = "System program")]
+    #[account(11, name = "token_program", desc = "Token program")]
+    CreateStakingPool = 3,
 }
 
 impl TryFrom<&u8> for StakingInstructions {
@@ -33,6 +47,7 @@ impl TryFrom<&u8> for StakingInstructions {
             0 => Ok(StakingInstructions::InitConfigAccount),
             1 => Ok(StakingInstructions::UpdateAuthority),
             2 => Ok(StakingInstructions::UpdateProtocolFee),
+            3 => Ok(StakingInstructions::CreateStakingPool),
             _ => Err(ProgramError::InvalidInstructionData)
         }
     }

@@ -25,10 +25,18 @@ describe('Staking Program Tests - Debug Version', function () {
 
     let mint: PublicKey;
 
+    let stakingPoolPda: PublicKey;
+    let stakeTokenVaultPda: PublicKey;
+    let rewardTokenVaultPda: PublicKey;
+    let liquidStakeMintPda: PublicKey;
+    let rewardMint: PublicKey;
+
+    const POOL_ID = 1;
+    let payer: Keypair;    
+
     before(async function () {
         connection = new Connection('https://api.devnet.solana.com', 'confirmed');
 
-        let payer: Keypair;
         try {
             const secretKey = JSON.parse(fs.readFileSync('./wallet.json', 'utf8'));
             payer = Keypair.fromSecretKey(Uint8Array.from(secretKey));
@@ -71,6 +79,26 @@ describe('Staking Program Tests - Debug Version', function () {
             [Buffer.from("treasury_account"), mint.toBuffer(), provider.wallet.publicKey.toBuffer()],
             programId
         );
+
+        [stakingPoolPda] = PublicKey.findProgramAddressSync(
+            [Buffer.from("staking_pool"), provider.wallet.publicKey.toBuffer(), Buffer.from(Uint8Array.of(POOL_ID))],
+            programId
+        );
+
+        [stakeTokenVaultPda] = PublicKey.findProgramAddressSync(
+            [Buffer.from("stake_token_vault"), mint.toBuffer(), globalConfigAccountPda.toBuffer()],
+            programId
+        );
+
+        [rewardTokenVaultPda] = PublicKey.findProgramAddressSync(
+            [Buffer.from("reward_token_vault"), mint.toBuffer(), globalConfigAccountPda.toBuffer()],
+            programId
+        );
+
+        [liquidStakeMintPda] = PublicKey.findProgramAddressSync(
+            [Buffer.from("liquid_stake_mint"), provider.wallet.publicKey.toBuffer()],
+            programId
+        )
 
         console.log("Program ID:", programId.toString());
         console.log("Global Config PDA:", globalConfigAccountPda.toString());
@@ -318,5 +346,188 @@ describe('Staking Program Tests - Debug Version', function () {
 
         const sig = await provider.sendAndConfirm(transaction, []);
         console.log("✅ Transaction Signature:", sig); 
-    })
+    });
+
+    it("Create Staking Pool Account", async () => {
+        // Fixed values matching your current code
+        const REWARD_RATE_PER_SECOND = 100;
+        const LOCK_PERIOD_ENABLED = 1;  // 1 = true, 0 = false
+        const LOCK_PERIOD_DURATION = 100000;
+        const REWARD_MULTIPLIER = 150;  // Must be > 0 per your validation
+        const EARLY_WITHDRAW_PENALTY = 500;
+        const SLASHING_ENABLED = 1;  // 1 = true, 0 = false
+        const SLASHING_CONDITION_TYPE = 1;  // Must be valid SlashTypeEnum
+        const SLASH_PERCENTAGE = 1000;  // In basis points (10%)
+        const MIN_EVIDENCE_REQUIRED = 5;
+        const COOLDOWN_PERIOD = 100000;
+        const MAXIMUM_STAKE_LIMIT = 5000;  // Fixed variable name
+        const MINIMUM_STAKE_AMOUNT = 10000;
+
+        console.log("Creating staking pool with ID:", POOL_ID);
+
+        // Create reward token mint (different from stake token)
+        const rewardMint = await createMint(
+            provider.connection,
+            payer,
+            provider.wallet.publicKey,
+            null,
+            6
+        );
+
+        // Fix PDA generation - pool_id needs to be u64 bytes, not single byte
+        const poolIdBytes = Buffer.alloc(8);
+        poolIdBytes.writeBigUInt64LE(BigInt(POOL_ID));
+    
+        const [stakingPoolPda] = PublicKey.findProgramAddressSync(
+            [
+                Buffer.from("staking_pool"),
+                provider.wallet.publicKey.toBuffer(),
+                poolIdBytes  // Use proper u64 bytes
+            ],
+            programId
+        );
+
+        const [stakeTokenVaultPda] = PublicKey.findProgramAddressSync(
+            [
+                Buffer.from("stake_token_vault"),
+                mint.toBuffer(),
+                globalConfigAccountPda.toBuffer()
+            ],
+            programId
+        );
+
+        const [rewardTokenVaultPda] = PublicKey.findProgramAddressSync(
+            [
+                Buffer.from("reward_token_vault"),
+                rewardMint.toBuffer(),  // Use reward mint, not stake mint
+                globalConfigAccountPda.toBuffer()
+            ],
+            programId
+        );
+
+        const [liquidStakeMintPda] = PublicKey.findProgramAddressSync(
+            [
+                Buffer.from("liquid_stake_mint"),
+                provider.wallet.publicKey.toBuffer()
+            ],
+            programId
+        );
+
+        // Build instruction data - exactly 64 bytes
+        const poolIdBuffer = Buffer.alloc(8);
+        poolIdBuffer.writeBigUInt64LE(BigInt(POOL_ID));
+
+        const rewardRateBuffer = Buffer.alloc(8);
+        rewardRateBuffer.writeBigUInt64LE(BigInt(REWARD_RATE_PER_SECOND));
+
+        const lockPeriodEnabledBuffer = Buffer.from([LOCK_PERIOD_ENABLED]);
+
+        const lockPeriodDurationBuffer = Buffer.alloc(8);
+        lockPeriodDurationBuffer.writeBigInt64LE(BigInt(LOCK_PERIOD_DURATION));
+
+        const rewardMultiplierBuffer = Buffer.alloc(2);
+        rewardMultiplierBuffer.writeUInt16LE(REWARD_MULTIPLIER);
+
+        const earlyWithdrawPenaltyBuffer = Buffer.alloc(8);
+        earlyWithdrawPenaltyBuffer.writeBigUInt64LE(BigInt(EARLY_WITHDRAW_PENALTY));
+
+        const slashingEnabledBuffer = Buffer.from([SLASHING_ENABLED]);
+
+        const slashingConditionTypeBuffer = Buffer.from([SLASHING_CONDITION_TYPE]);
+
+        const slashPercentageBuffer = Buffer.alloc(2);
+        slashPercentageBuffer.writeUInt16LE(SLASH_PERCENTAGE);
+
+        const minEvidenceRequiredBuffer = Buffer.from([MIN_EVIDENCE_REQUIRED]);
+
+        const cooldownPeriodBuffer = Buffer.alloc(8);
+        cooldownPeriodBuffer.writeBigInt64LE(BigInt(COOLDOWN_PERIOD));
+
+        const maximumStakeLimitBuffer = Buffer.alloc(8);
+        maximumStakeLimitBuffer.writeBigUInt64LE(BigInt(MAXIMUM_STAKE_LIMIT));
+
+        const minimumStakeAmountBuffer = Buffer.alloc(8);
+        minimumStakeAmountBuffer.writeBigUInt64LE(BigInt(MINIMUM_STAKE_AMOUNT));
+
+        const instructionData = Buffer.concat([
+            poolIdBuffer,                    // 0-7: pool_id (u64)
+            rewardRateBuffer,               // 8-15: reward_rate_per_second (u64)
+            lockPeriodEnabledBuffer,        // 16: lock_period_enabled (u8)
+            lockPeriodDurationBuffer,       // 17-24: lock_period_duration (i64)
+            rewardMultiplierBuffer,         // 25-26: reward_multiplier (u16)
+            earlyWithdrawPenaltyBuffer,     // 27-34: early_withdraw_penalty (u64)
+            slashingEnabledBuffer,          // 35: slashing_enabled (u8)
+            slashingConditionTypeBuffer,    // 36: slashing_condition_type (u8)
+            slashPercentageBuffer,          // 37-38: slash_percentage (u16)
+            minEvidenceRequiredBuffer,      // 39: min_evidence_required (u8)
+            cooldownPeriodBuffer,           // 40-47: cooldown_period (i64)
+            maximumStakeLimitBuffer,        // 48-55: maximum_stake_limit (u64)
+            minimumStakeAmountBuffer        // 56-63: minimum_stake_amount (u64)
+        ]);
+
+        console.log("Instruction data length:", instructionData.length, "(should be 64)");
+
+        const finalInstructionData = Buffer.concat([
+            Buffer.from([3]), // discriminator for CreateStakingPool
+            instructionData
+        ]);
+
+        const priceFeedAccount = Keypair.generate().publicKey;
+
+        const instruction = new TransactionInstruction({
+            programId: programId,
+            keys: [
+                { pubkey: provider.wallet.publicKey, isSigner: false, isWritable: false },    // authority
+                { pubkey: provider.wallet.publicKey, isSigner: true, isWritable: true },      // creator
+                { pubkey: mint, isSigner: false, isWritable: false },                         // stake_token_mint
+                { pubkey: rewardMint, isSigner: false, isWritable: false },                   // reward_token_mint
+                { pubkey: stakeTokenVaultPda, isSigner: false, isWritable: true },            // stake_token_vault
+                { pubkey: rewardTokenVaultPda, isSigner: false, isWritable: true },           // reward_token_vault
+                { pubkey: stakingPoolPda, isSigner: false, isWritable: true },                // staking_pool_account
+                { pubkey: globalConfigAccountPda, isSigner: false, isWritable: true },        // global_config_account
+                { pubkey: liquidStakeMintPda, isSigner: false, isWritable: true },            // liquid_stake_mint
+                { pubkey: priceFeedAccount, isSigner: false, isWritable: false },             // price_feed_account
+                { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },      // system_program
+                { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },             // token_program
+            ],
+            data: finalInstructionData
+        });
+
+        console.log("\n=== Account Keys ===");
+        console.log("Authority:", provider.wallet.publicKey.toString());
+        console.log("Creator:", provider.wallet.publicKey.toString());
+        console.log("Stake Token Mint:", mint.toString());
+        console.log("Reward Token Mint:", rewardMint.toString());
+        console.log("Stake Token Vault PDA:", stakeTokenVaultPda.toString());
+        console.log("Reward Token Vault PDA:", rewardTokenVaultPda.toString());
+        console.log("Staking Pool PDA:", stakingPoolPda.toString());
+        console.log("Global Config PDA:", globalConfigAccountPda.toString());
+        console.log("Liquid Stake Mint PDA:", liquidStakeMintPda.toString());
+
+        const transaction = new Transaction().add(instruction);
+
+        const { blockhash } = await connection.getLatestBlockhash();
+        transaction.recentBlockhash = blockhash;
+        transaction.feePayer = provider.wallet.publicKey;
+
+        console.log("Simulating transaction...");
+        try {
+            const simulationResult = await connection.simulateTransaction(transaction);
+            console.log("Simulation result:", simulationResult);
+        } catch (simError: any) {
+            console.error("Simulation failed:", simError);
+            console.error("Simulation logs:", simError.logs);
+        }
+
+        const sig = await provider.sendAndConfirm(transaction, []);
+        console.log("✅ Transaction Signature:", sig);
+
+        // Verify the staking pool was created
+        const stakingPoolInfo = await connection.getAccountInfo(stakingPoolPda);
+        console.log("Staking Pool created:", !!stakingPoolInfo);
+        if (stakingPoolInfo) {
+            console.log("Staking Pool owner:", stakingPoolInfo.owner.toString());
+            console.log("Staking Pool data length:", stakingPoolInfo.data.length);
+        }
+    });
 });

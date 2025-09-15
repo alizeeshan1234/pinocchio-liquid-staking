@@ -2,7 +2,10 @@ use pinocchio::{account_info::AccountInfo, instruction::Signer, program_error::P
 use pinocchio_system::instructions::CreateAccount;
 use pinocchio_token::{instructions::{InitializeAccount3, InitializeMint, InitializeMint2}, state::{Mint, TokenAccount}};
 
-use crate::states::{helper::AccountData, staking_pool_account::{PoolStatusEnum, SlashTypeEnum, StakingPool}};
+use crate::states::{global_config::GlobalConfig, helper::AccountData, staking_pool_account::{PoolStatusEnum, SlashTypeEnum, StakingPool}};
+
+const MAX_POOLS: usize = 10;
+const POOL_STATUS_ACTIVE: u8 = 0;
 
 pub fn process_create_staking_pool(accounts: &[AccountInfo], instruction_data: &[u8]) -> ProgramResult {
     let [
@@ -26,11 +29,7 @@ pub fn process_create_staking_pool(accounts: &[AccountInfo], instruction_data: &
         return Err(ProgramError::MissingRequiredSignature);
     };
 
-    if global_config_account.data_is_empty() {
-        return Err(ProgramError::UninitializedAccount);
-    };
-
-    if instruction_data.len() < 59 { 
+    if instruction_data.len() < 64 { 
         return Err(ProgramError::InvalidInstructionData);
     }
 
@@ -248,23 +247,14 @@ pub fn process_create_staking_pool(accounts: &[AccountInfo], instruction_data: &
             owner: &crate::ID
         }.invoke_signed(&[signer_seeds])?;
 
-        let lock_period_enabled_bool = match lock_period_enabled {
-            0 => true,
-            1 => false,
-            _ => false,
-        };
-
-        let slashing_enabled_bool = match slashing_enabled {
-            0 => true,
-            1 => false,
-            _ => false,
-        };
+        let lock_period_enabled_bool = lock_period_enabled != 0;
+        let slashing_enabled_bool = slashing_enabled != 0;
 
         let mut staking_pool_account_info = StakingPool::from_account_info_mut(staking_pool_account)?;
         staking_pool_account_info.authority = *authority.key();
         staking_pool_account_info.pool_id = pool_id;
         staking_pool_account_info.creation_timestamp = clock.unix_timestamp;
-        staking_pool_account_info.pool_status = 1;
+        staking_pool_account_info.pool_status = 0;
         staking_pool_account_info.stake_token_mint = *stake_token_mint.key();
         staking_pool_account_info.reward_token_mint = *reward_token_mint.key();
         staking_pool_account_info.stake_token_vault = *stake_token_vault.key();
@@ -291,6 +281,21 @@ pub fn process_create_staking_pool(accounts: &[AccountInfo], instruction_data: &
         staking_pool_account_info.stake_pool_bump = staking_pool_bump;
     }
 
+    let mut global_config_account_info = GlobalConfig::from_account_info_mut(global_config_account)?;
+    global_config_account_info.total_pools_created = global_config_account_info
+        .total_pools_created
+        .checked_add(1)
+        .ok_or(ProgramError::ArithmeticOverflow)?;
+
+    global_config_account_info.active_pools = global_config_account_info
+        .active_pools
+        .checked_add(1)
+        .ok_or(ProgramError::ArithmeticOverflow)?;
+
+    if global_config_account_info.active_pool_keys.len() >= MAX_POOLS {
+        return Err(ProgramError::AccountDataTooSmall);
+    }
+    global_config_account_info.active_pool_keys.push(*staking_pool_account.key());
 
     Ok(())
 }

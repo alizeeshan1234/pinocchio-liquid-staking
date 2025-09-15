@@ -26,7 +26,7 @@
           "isMut": true,
           "isSigner": false,
           "docs": [
-            "Global Config Account"
+            "GLobal Config Account"
           ]
         },
         {
@@ -34,7 +34,7 @@
           "isMut": true,
           "isSigner": false,
           "docs": [
-            "Treasury account"
+            "treasury"
           ]
         },
         {
@@ -81,7 +81,7 @@
           "isMut": true,
           "isSigner": true,
           "docs": [
-            "Current authority account"
+            "Account that pays for account creation"
           ]
         },
         {
@@ -89,7 +89,7 @@
           "isMut": true,
           "isSigner": false,
           "docs": [
-            "Global Config Account"
+            "GLobal Config Account"
           ]
         }
       ],
@@ -112,7 +112,7 @@
           "isMut": true,
           "isSigner": true,
           "docs": [
-            "Authority account"
+            "Account that pays for account creation"
           ]
         },
         {
@@ -120,7 +120,7 @@
           "isMut": true,
           "isSigner": false,
           "docs": [
-            "Global Config Account"
+            "GLobal Config Account"
           ]
         }
       ],
@@ -133,6 +133,165 @@
       "discriminant": {
         "type": "u8",
         "value": 2
+      }
+    },
+    {
+      "name": "CreateStakingPool",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "stakeTokenMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "rewardTokenMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "stakeTokenVault",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "rewardTokenVault",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "stakingPoolAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "globalConfigAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "liquidStakeMint",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Liquid stake mint"
+          ]
+        },
+        {
+          "name": "priceFeedAccount",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Price feed account"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "poolId",
+          "type": "u64"
+        },
+        {
+          "name": "rewardRatePerSecond",
+          "type": "u64"
+        },
+        {
+          "name": "lockPeriodEnabled",
+          "type": "u8"
+        },
+        {
+          "name": "lockPeriodDuration",
+          "type": "i64"
+        },
+        {
+          "name": "rewardMultiplier",
+          "type": "u16"
+        },
+        {
+          "name": "earlyWithdrawPenalty",
+          "type": "u64"
+        },
+        {
+          "name": "slashingEnabled",
+          "type": "u8"
+        },
+        {
+          "name": "slashingConditionType",
+          "type": "u8"
+        },
+        {
+          "name": "slashPercentage",
+          "type": "u16"
+        },
+        {
+          "name": "minEvidenceRequired",
+          "type": "u8"
+        },
+        {
+          "name": "cooldownPeriod",
+          "type": "i64"
+        },
+        {
+          "name": "maximumStakeLimit",
+          "type": "u64"
+        },
+        {
+          "name": "minimumStakeAmount",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 3
       }
     }
   ],
@@ -171,6 +330,16 @@
             "type": "u64"
           },
           {
+            "name": "activePools",
+            "type": "u64"
+          },
+          {
+            "name": "activePoolKeys",
+            "type": {
+              "vec": "publicKey"
+            }
+          },
+          {
             "name": "bump",
             "type": "u8"
           },
@@ -180,10 +349,130 @@
           }
         ]
       }
+    },
+    {
+      "name": "StakingPool",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "poolId",
+            "type": "u64"
+          },
+          {
+            "name": "creationTimestamp",
+            "type": "i64"
+          },
+          {
+            "name": "poolStatus",
+            "type": "u8"
+          },
+          {
+            "name": "stakeTokenMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "rewardTokenMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "stakeTokenVault",
+            "type": "publicKey"
+          },
+          {
+            "name": "rewardTokenVault",
+            "type": "publicKey"
+          },
+          {
+            "name": "totalStaked",
+            "type": "u64"
+          },
+          {
+            "name": "totalRewardDistributed",
+            "type": "u64"
+          },
+          {
+            "name": "rewardRatePerSecond",
+            "type": "u64"
+          },
+          {
+            "name": "accumulatedRewardPerShare",
+            "type": "u128"
+          },
+          {
+            "name": "lockPeriodEnabled",
+            "type": "bool"
+          },
+          {
+            "name": "lockPeriodDuration",
+            "type": "i64"
+          },
+          {
+            "name": "rewardMultiplier",
+            "type": "u16"
+          },
+          {
+            "name": "earlyWithdrawPenalty",
+            "type": "u64"
+          },
+          {
+            "name": "slashingEnabled",
+            "type": "bool"
+          },
+          {
+            "name": "slashingConditionType",
+            "type": "u8"
+          },
+          {
+            "name": "slashPercentage",
+            "type": "u16"
+          },
+          {
+            "name": "minEvidenceRequired",
+            "type": "u8"
+          },
+          {
+            "name": "cooldownPeriod",
+            "type": "i64"
+          },
+          {
+            "name": "priceFeedAccount",
+            "type": "publicKey"
+          },
+          {
+            "name": "maximumStakeLimit",
+            "type": "u64"
+          },
+          {
+            "name": "minimumStakeAmount",
+            "type": "u64"
+          },
+          {
+            "name": "liquidStakeMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "liquidStakeSupply",
+            "type": "u64"
+          },
+          {
+            "name": "emergencyPauseFlag",
+            "type": "bool"
+          },
+          {
+            "name": "stakePoolBump",
+            "type": "u8"
+          }
+        ]
+      }
     }
   ],
   "metadata": {
     "origin": "shank",
-    "address": "FaBZMNodNrPzMhi5mQ5nd7r6wasmV1fK6BMUrQyYFCsV"
+    "address": "8NdWBPoavRBi5wHU85hVKTpTjwpg868NLwhxEgCuiKUw"
   }
 }

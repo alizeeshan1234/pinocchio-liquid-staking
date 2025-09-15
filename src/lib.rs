@@ -4,7 +4,7 @@ pub use pinocchio_pubkey::declare_id;
 
 use crate::instructions::StakingInstructions;
 
-declare_id!("FaBZMNodNrPzMhi5mQ5nd7r6wasmV1fK6BMUrQyYFCsV");
+declare_id!("8NdWBPoavRBi5wHU85hVKTpTjwpg868NLwhxEgCuiKUw");
 
 entrypoint!(process_instruction);
 
@@ -23,6 +23,7 @@ pub fn process_instruction(
         StakingInstructions::InitConfigAccount => instructions::init_global_config::process_initialize_global_config(accounts, instruction_data)?,
         StakingInstructions::UpdateAuthority => instructions::update_global_config::process_update_authority(accounts, instruction_data)?,
         StakingInstructions::UpdateProtocolFee => instructions::update_global_config::process_update_protocol_fee(accounts, instruction_data)?,
+        StakingInstructions::CreateStakingPool => instructions::create_staking_pool::process_create_staking_pool(accounts, instruction_data)?
     };
 
     Ok(())
