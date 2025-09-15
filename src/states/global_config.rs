@@ -2,7 +2,7 @@ use pinocchio::{account_info::{AccountInfo, Ref, RefMut}, program_error::Program
 use shank::ShankAccount;
 use crate::states::helper::AccountData;
 
-#[derive(Debug, Clone, Copy, ShankAccount)]
+#[derive(Debug, Clone, ShankAccount)]
 pub struct GlobalConfig {
     pub authority: Pubkey,
     pub treasury: Pubkey,
@@ -11,6 +11,8 @@ pub struct GlobalConfig {
     pub min_stake_amount: u64,
     pub emergency_pause: bool, 
     pub total_pools_created: u64,
+    pub active_pools: u64,
+    pub active_pool_keys: Vec<Pubkey>,
     pub bump: u8, 
     pub treasury_bump: u8,
 }

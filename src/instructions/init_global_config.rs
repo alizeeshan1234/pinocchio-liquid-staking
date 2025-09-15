@@ -116,6 +116,8 @@ pub fn process_initialize_global_config(accounts: &[AccountInfo], instruction_da
         global_config_account_info.min_stake_amount = min_stake_amount;
         global_config_account_info.emergency_pause = true;
         global_config_account_info.total_pools_created = 0;
+        global_config_account_info.active_pools = 0;
+        global_config_account_info.active_pool_keys = Vec::new();
         global_config_account_info.bump = bump1;
         global_config_account_info.treasury_bump = bump2;
     } else {

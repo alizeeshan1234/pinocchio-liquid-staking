@@ -279,7 +279,7 @@ describe('Staking Program Tests - Debug Version', function () {
     });
 
     it("Process Update Protocol Fees", async () => {
-        const protocolFeeRate = 1000;
+        const protocolFeeRate = 3000;
         const protocolFeeRateBuffer = Buffer.alloc(2);
         protocolFeeRateBuffer.writeUInt16LE(protocolFeeRate);
 
