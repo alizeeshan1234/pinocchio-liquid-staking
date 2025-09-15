@@ -3,6 +3,7 @@ use shank::ShankInstruction;
 
 pub mod init_global_config;
 pub mod update_global_config;
+pub mod create_staking_pool;
 
 #[repr(u8)]
 #[derive(ShankInstruction)]

@@ -15,7 +15,6 @@ pub struct StakingPool {
     pub total_staked: u64,
     pub total_reward_distributed: u64,
     pub reward_rate_per_second: u64,
-    pub last_reward_update_slot: u64,
     pub accumulated_reward_per_share: u128,
     pub lock_period_enabled: bool,
     pub lock_period_duration: i64,
