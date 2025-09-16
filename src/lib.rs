@@ -4,7 +4,7 @@ pub use pinocchio_pubkey::declare_id;
 
 use crate::instructions::StakingInstructions;
 
-declare_id!("8NdWBPoavRBi5wHU85hVKTpTjwpg868NLwhxEgCuiKUw");
+declare_id!("B8UHx9HNViYwHU94LHu8rwGSL1GkeC9rCb4YdLkT4nex");
 
 entrypoint!(process_instruction);
 

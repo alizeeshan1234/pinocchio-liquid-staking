@@ -93,7 +93,7 @@ pub fn process_create_staking_pool(accounts: &[AccountInfo], instruction_data: &
         return Err(ProgramError::InvalidInstructionData);
     }
 
-    SlashTypeEnum::try_from(&slashing_condition_type)?;
+    // SlashTypeEnum::try_from(&slashing_condition_type)?;
 
     let clock = Clock::get()?;
 

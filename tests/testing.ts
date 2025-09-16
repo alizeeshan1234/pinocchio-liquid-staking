@@ -31,8 +31,10 @@ describe('Staking Program Tests - Debug Version', function () {
     let liquidStakeMintPda: PublicKey;
     let rewardMint: PublicKey;
 
-    const POOL_ID = 1;
-    let payer: Keypair;    
+    const POOL_ID = 33;
+    let payer: Keypair;   
+    const poolIdBytes = Buffer.alloc(8);
+    poolIdBytes.writeBigUInt64LE(BigInt(POOL_ID));
 
     before(async function () {
         connection = new Connection('https://api.devnet.solana.com', 'confirmed');
@@ -70,6 +72,14 @@ describe('Staking Program Tests - Debug Version', function () {
             6
         );
 
+        rewardMint = await createMint(
+            provider.connection,
+            payer,
+            provider.wallet.publicKey,
+            null,
+            6
+        );
+
         [globalConfigAccountPda] = PublicKey.findProgramAddressSync(
             [Buffer.from("global_config_account"), provider.wallet.publicKey.toBuffer()],
             programId
@@ -81,7 +91,7 @@ describe('Staking Program Tests - Debug Version', function () {
         );
 
         [stakingPoolPda] = PublicKey.findProgramAddressSync(
-            [Buffer.from("staking_pool"), provider.wallet.publicKey.toBuffer(), Buffer.from(Uint8Array.of(POOL_ID))],
+            [Buffer.from("staking_pool"), provider.wallet.publicKey.toBuffer(), poolIdBytes],
             programId
         );
 
@@ -91,14 +101,14 @@ describe('Staking Program Tests - Debug Version', function () {
         );
 
         [rewardTokenVaultPda] = PublicKey.findProgramAddressSync(
-            [Buffer.from("reward_token_vault"), mint.toBuffer(), globalConfigAccountPda.toBuffer()],
+            [Buffer.from("reward_token_vault"), rewardMint.toBuffer(), globalConfigAccountPda.toBuffer()],
             programId
         );
 
         [liquidStakeMintPda] = PublicKey.findProgramAddressSync(
             [Buffer.from("liquid_stake_mint"), provider.wallet.publicKey.toBuffer()],
             programId
-        )
+        );
 
         console.log("Program ID:", programId.toString());
         console.log("Global Config PDA:", globalConfigAccountPda.toString());
@@ -360,58 +370,15 @@ describe('Staking Program Tests - Debug Version', function () {
         const SLASH_PERCENTAGE = 1000;  // In basis points (10%)
         const MIN_EVIDENCE_REQUIRED = 5;
         const COOLDOWN_PERIOD = 100000;
-        const MAXIMUM_STAKE_LIMIT = 5000;  // Fixed variable name
+        const MAXIMUM_STAKE_LIMIT = 50000;  // Fixed variable name
         const MINIMUM_STAKE_AMOUNT = 10000;
 
         console.log("Creating staking pool with ID:", POOL_ID);
-
-        // Create reward token mint (different from stake token)
-        const rewardMint = await createMint(
-            provider.connection,
-            payer,
-            provider.wallet.publicKey,
-            null,
-            6
-        );
 
         // Fix PDA generation - pool_id needs to be u64 bytes, not single byte
         const poolIdBytes = Buffer.alloc(8);
         poolIdBytes.writeBigUInt64LE(BigInt(POOL_ID));
     
-        const [stakingPoolPda] = PublicKey.findProgramAddressSync(
-            [
-                Buffer.from("staking_pool"),
-                provider.wallet.publicKey.toBuffer(),
-                poolIdBytes  // Use proper u64 bytes
-            ],
-            programId
-        );
-
-        const [stakeTokenVaultPda] = PublicKey.findProgramAddressSync(
-            [
-                Buffer.from("stake_token_vault"),
-                mint.toBuffer(),
-                globalConfigAccountPda.toBuffer()
-            ],
-            programId
-        );
-
-        const [rewardTokenVaultPda] = PublicKey.findProgramAddressSync(
-            [
-                Buffer.from("reward_token_vault"),
-                rewardMint.toBuffer(),  // Use reward mint, not stake mint
-                globalConfigAccountPda.toBuffer()
-            ],
-            programId
-        );
-
-        const [liquidStakeMintPda] = PublicKey.findProgramAddressSync(
-            [
-                Buffer.from("liquid_stake_mint"),
-                provider.wallet.publicKey.toBuffer()
-            ],
-            programId
-        );
 
         // Build instruction data - exactly 64 bytes
         const poolIdBuffer = Buffer.alloc(8);
@@ -477,7 +444,7 @@ describe('Staking Program Tests - Debug Version', function () {
         const instruction = new TransactionInstruction({
             programId: programId,
             keys: [
-                { pubkey: provider.wallet.publicKey, isSigner: false, isWritable: false },    // authority
+                { pubkey: provider.wallet.publicKey, isSigner: true, isWritable: true },    // authority
                 { pubkey: provider.wallet.publicKey, isSigner: true, isWritable: true },      // creator
                 { pubkey: mint, isSigner: false, isWritable: false },                         // stake_token_mint
                 { pubkey: rewardMint, isSigner: false, isWritable: false },                   // reward_token_mint
