@@ -4,6 +4,7 @@ use shank::ShankInstruction;
 pub mod init_global_config;
 pub mod update_global_config;
 pub mod create_staking_pool;
+pub mod update_pool_config;
 
 #[repr(u8)]
 #[derive(ShankInstruction)]
@@ -37,6 +38,8 @@ pub enum StakingInstructions {
     #[account(10, name = "system_program", desc = "System program")]
     #[account(11, name = "token_program", desc = "Token program")]
     CreateStakingPool = 3,
+
+    UpdatePoolConfig = 4,
 }
 
 impl TryFrom<&u8> for StakingInstructions {
@@ -48,6 +51,7 @@ impl TryFrom<&u8> for StakingInstructions {
             1 => Ok(StakingInstructions::UpdateAuthority),
             2 => Ok(StakingInstructions::UpdateProtocolFee),
             3 => Ok(StakingInstructions::CreateStakingPool),
+            4 => Ok(StakingInstructions::UpdatePoolConfig),
             _ => Err(ProgramError::InvalidInstructionData)
         }
     }

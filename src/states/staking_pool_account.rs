@@ -14,23 +14,23 @@ pub struct StakingPool {
     pub reward_token_vault: Pubkey,
     pub total_staked: u64,
     pub total_reward_distributed: u64,
-    pub reward_rate_per_second: u64,
-    pub accumulated_reward_per_share: u128,
-    pub lock_period_enabled: bool,
-    pub lock_period_duration: i64,
-    pub reward_multiplier: u16,
-    pub early_withdraw_penalty: u64,
-    pub slashing_enabled: bool,
-    pub slashing_condition_type: u8, //SlashTypeEnum
-    pub slash_percentage: u16,
-    pub min_evidence_required: u8,
-    pub cooldown_period: i64,
-    pub price_feed_account: Pubkey,
-    pub maximum_stake_limit: u64,
-    pub minimum_stake_amount: u64,
-    pub liquid_stake_mint: Pubkey,
+    pub reward_rate_per_second: u64, //u
+    pub accumulated_reward_per_share: u128, //u
+    pub lock_period_enabled: bool, //u
+    pub lock_period_duration: i64, //u
+    pub reward_multiplier: u16, //u
+    pub early_withdraw_penalty: u64, //u
+    pub slashing_enabled: bool, //u
+    pub slashing_condition_type: u8, //SlashTypeEnum //u
+    pub slash_percentage: u16, //u
+    pub min_evidence_required: u8, //u
+    pub cooldown_period: i64, //u
+    pub price_feed_account: Pubkey, //u
+    pub maximum_stake_limit: u64, //u
+    pub minimum_stake_amount: u64, //u
+    pub liquid_stake_mint: Pubkey, 
     pub liquid_stake_supply: u64,
-    pub emergency_pause_flag: bool,
+    pub emergency_pause_flag: bool, 
     pub stake_pool_bump: u8,
 }
 

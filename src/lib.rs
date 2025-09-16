@@ -23,7 +23,8 @@ pub fn process_instruction(
         StakingInstructions::InitConfigAccount => instructions::init_global_config::process_initialize_global_config(accounts, instruction_data)?,
         StakingInstructions::UpdateAuthority => instructions::update_global_config::process_update_authority(accounts, instruction_data)?,
         StakingInstructions::UpdateProtocolFee => instructions::update_global_config::process_update_protocol_fee(accounts, instruction_data)?,
-        StakingInstructions::CreateStakingPool => instructions::create_staking_pool::process_create_staking_pool(accounts, instruction_data)?
+        StakingInstructions::CreateStakingPool => instructions::create_staking_pool::process_create_staking_pool(accounts, instruction_data)?,
+        StakingInstructions::UpdatePoolConfig => instructions::update_pool_config::process_update_pool_config(accounts, instruction_data)?
     };
 
     Ok(())

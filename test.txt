@@ -193,6 +193,46 @@
           "docs": [
             "Account that pays for account creation"
           ]
+        },
+        {
+          "name": "globalConfigAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "liquidStakeMint",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Liquid stake mint"
+          ]
+        },
+        {
+          "name": "priceFeedAccount",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Price feed account"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program"
+          ]
         }
       ],
       "args": [
@@ -433,6 +473,6 @@
   ],
   "metadata": {
     "origin": "shank",
-    "address": "C7Fea4aFNHyyPe4mUe4TQK2oyv24hiVV16Z2XSu3PmAR"
+    "address": "B8UHx9HNViYwHU94LHu8rwGSL1GkeC9rCb4YdLkT4nex"
   }
 }

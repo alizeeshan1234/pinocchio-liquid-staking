@@ -31,7 +31,7 @@ pub fn process_create_staking_pool(accounts: &[AccountInfo], instruction_data: &
 
     if instruction_data.len() < 64 { 
         return Err(ProgramError::InvalidInstructionData);
-    }
+    };
 
     let pool_id = u64::from_le_bytes(
         instruction_data[0..8].try_into().map_err(|_| ProgramError::InvalidInstructionData)?
@@ -79,21 +79,19 @@ pub fn process_create_staking_pool(accounts: &[AccountInfo], instruction_data: &
 
     if reward_multiplier == 0 {
         return Err(ProgramError::InvalidInstructionData);
-    }
+    };
     
     if slash_percentage > 10000 { 
         return Err(ProgramError::InvalidInstructionData);
-    }
+    };
 
     if minimum_stake_amount == 0 {
         return Err(ProgramError::InvalidInstructionData);
-    }
+    };
 
     if maximum_stake_limit != 0 && maximum_stake_limit < minimum_stake_amount {
         return Err(ProgramError::InvalidInstructionData);
-    }
-
-    // SlashTypeEnum::try_from(&slashing_condition_type)?;
+    };
 
     let clock = Clock::get()?;
 
