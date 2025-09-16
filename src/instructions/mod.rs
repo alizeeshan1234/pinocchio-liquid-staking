@@ -39,6 +39,9 @@ pub enum StakingInstructions {
     #[account(11, name = "token_program", desc = "Token program")]
     CreateStakingPool = 3,
 
+    #[account(0, writable, name = "authority", desc = "Account that pays for account creation")]
+    #[account(1, writable, name = "staking_pool_account", desc = "Account that pays for account creation")]
+    #[account(2, name = "price_feed_account", desc = "Account that pays for account creation")]
     UpdatePoolConfig = 4,
 }
 

@@ -497,4 +497,67 @@ describe('Staking Program Tests - Debug Version', function () {
             console.log("Staking Pool data length:", stakingPoolInfo.data.length);
         }
     });
+
+    it("Update Pool Config", async () => {
+        const UPDATE_TYPE_DISCRIMINATOR = 0; // RewardRatePerSecond
+        const NEW_REWARD_RATE = 200; // Must be > 0 for discriminator 0
+
+        // Build instruction data correctly
+        const updateTypeDiscriminatorBuffer = Buffer.alloc(1); // Only 1 byte for u8
+        updateTypeDiscriminatorBuffer.writeUInt8(UPDATE_TYPE_DISCRIMINATOR);
+
+        const poolIdBuffer = Buffer.alloc(8);
+        poolIdBuffer.writeBigUInt64LE(BigInt(POOL_ID));
+
+        const valueBuffer = Buffer.alloc(8); // For u64 value
+        valueBuffer.writeBigUInt64LE(BigInt(NEW_REWARD_RATE));
+
+        const instructionData = Buffer.concat([
+            updateTypeDiscriminatorBuffer, // byte 0: discriminator (u8)
+            poolIdBuffer,                  // bytes 1-8: pool_id (u64)
+            valueBuffer                    // bytes 9-16: value (u64)
+        ]);
+
+        const finalInstructionData = Buffer.concat([
+            Buffer.from([4]), // Instruction discriminator for UpdatePoolConfig
+            instructionData
+        ]);
+
+        console.log("Instruction data breakdown:");
+        console.log("- Update type discriminator:", UPDATE_TYPE_DISCRIMINATOR);
+        console.log("- Pool ID:", POOL_ID);
+        console.log("- New reward rate:", NEW_REWARD_RATE);
+        console.log("- Final instruction data length:", finalInstructionData.length);
+        console.log("- Final instruction data (hex):", finalInstructionData.toString('hex'));
+
+        const priceFeedAccount = Keypair.generate().publicKey;
+
+        const instruction = new TransactionInstruction({
+            programId: programId,
+            keys: [
+                { pubkey: provider.wallet.publicKey, isSigner: true, isWritable: true },    // authority
+                { pubkey: stakingPoolPda, isSigner: false, isWritable: true },              // staking_pool_account
+                { pubkey: priceFeedAccount, isSigner: false, isWritable: false },           // price_feed_account
+            ],
+            data: finalInstructionData
+        });
+
+        const transaction = new Transaction().add(instruction);
+
+        const { blockhash } = await connection.getLatestBlockhash();
+        transaction.recentBlockhash = blockhash;
+        transaction.feePayer = provider.wallet.publicKey;
+
+        console.log("Simulating transaction...");
+        try {
+            const simulationResult = await connection.simulateTransaction(transaction);
+            console.log("Simulation result:", simulationResult);
+        } catch (simError: any) {
+            console.error("Simulation failed:", simError);
+            console.error("Simulation logs:", simError.logs);
+        }
+
+        const sig = await provider.sendAndConfirm(transaction, []);
+        console.log("✅ Transaction Signature:", sig); 
+    });
 });

@@ -293,6 +293,53 @@
         "type": "u8",
         "value": 3
       }
+    },
+    {
+      "name": "UpdatePoolConfig",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "stakingPoolAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "priceFeedAccount",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "updateTypeDiscriminator",
+          "type": "u8"
+        },
+        {
+          "name": "poolId",
+          "type": "u64"
+        },
+        {
+          "name": "value",
+          "type": "bytes"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 4
+      }
     }
   ],
   "accounts": [
