@@ -224,7 +224,6 @@ describe('Staking Program Tests - Debug Version', function () {
             transaction.recentBlockhash = blockhash;
             transaction.feePayer = provider.wallet.publicKey;
 
-            // Try to simulate first
             console.log("Simulating transaction...");
             try {
                 const simulationResult = await connection.simulateTransaction(transaction);
@@ -235,9 +234,8 @@ describe('Staking Program Tests - Debug Version', function () {
             }
 
             const sig = await provider.sendAndConfirm(transaction, []);
-            console.log("✅ Transaction Signature:", sig);
+            console.log("Transaction Signature:", sig);
             
-            // Verify accounts were created
             const newGlobalConfigInfo = await connection.getAccountInfo(globalConfigAccountPda);
             const newTreasuryInfo = await connection.getAccountInfo(treasuryAccountPda);
             
@@ -256,23 +254,15 @@ describe('Staking Program Tests - Debug Version', function () {
             }
             
         } catch (error: any) {
-            console.error("\n❌ Transaction failed:", error.message);
+            console.error("Transaction failed:", error.message);
             
             if (error.logs) {
-                console.error("\n📋 Transaction Logs:");
+                console.error("Transaction Logs:");
                 error.logs.forEach((log: string, index: number) => {
                     console.error(`${index}: ${log}`);
                 });
             }
 
-            // Additional debugging based on the error
-            console.error("\n🔍 Potential Issues:");
-            console.error("1. Program might not be deployed or wrong program ID");
-            console.error("2. Instruction data format mismatch");
-            console.error("3. Account order mismatch between TS and Rust");
-            console.error("4. PDA calculation mismatch");
-            console.error("5. Missing required accounts or wrong account types");
-            
             throw error;
         }
     });
@@ -313,7 +303,7 @@ describe('Staking Program Tests - Debug Version', function () {
         }
 
         const sig = await provider.sendAndConfirm(transaction, []);
-        console.log("✅ Transaction Signature:", sig); 
+        console.log("Transaction Signature:", sig); 
     });
 
     it("Process Update Protocol Fees", async () => {
@@ -355,7 +345,7 @@ describe('Staking Program Tests - Debug Version', function () {
         }
 
         const sig = await provider.sendAndConfirm(transaction, []);
-        console.log("✅ Transaction Signature:", sig); 
+        console.log("Transaction Signature:", sig); 
     });
 
     it("Create Staking Pool Account", async () => {
@@ -487,7 +477,7 @@ describe('Staking Program Tests - Debug Version', function () {
         }
 
         const sig = await provider.sendAndConfirm(transaction, []);
-        console.log("✅ Transaction Signature:", sig);
+        console.log("Transaction Signature:", sig);
 
         // Verify the staking pool was created
         const stakingPoolInfo = await connection.getAccountInfo(stakingPoolPda);
@@ -558,6 +548,6 @@ describe('Staking Program Tests - Debug Version', function () {
         }
 
         const sig = await provider.sendAndConfirm(transaction, []);
-        console.log("✅ Transaction Signature:", sig); 
+        console.log("Transaction Signature:", sig); 
     });
 });
