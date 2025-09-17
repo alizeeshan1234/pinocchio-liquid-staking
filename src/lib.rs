@@ -4,7 +4,7 @@ pub use pinocchio_pubkey::declare_id;
 
 use crate::instructions::StakingInstructions;
 
-declare_id!("B8UHx9HNViYwHU94LHu8rwGSL1GkeC9rCb4YdLkT4nex");
+declare_id!("CBYABVLbEsnJ3hKb4vLweLFDLQ5Kgic2BYDeuapmbcnH");
 
 entrypoint!(process_instruction);
 
@@ -24,7 +24,8 @@ pub fn process_instruction(
         StakingInstructions::UpdateAuthority => instructions::update_global_config::process_update_authority(accounts, instruction_data)?,
         StakingInstructions::UpdateProtocolFee => instructions::update_global_config::process_update_protocol_fee(accounts, instruction_data)?,
         StakingInstructions::CreateStakingPool => instructions::create_staking_pool::process_create_staking_pool(accounts, instruction_data)?,
-        StakingInstructions::UpdatePoolConfig => instructions::update_pool_config::process_update_pool_config(accounts, instruction_data)?
+        StakingInstructions::UpdatePoolConfig => instructions::update_pool_config::process_update_pool_config(accounts, instruction_data)?,
+        StakingInstructions::InitOracleConfig => instructions::oracle::process_init_oracle_config(accounts, instruction_data)?,
     };
 
     Ok(())

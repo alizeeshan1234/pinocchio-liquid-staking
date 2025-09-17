@@ -5,6 +5,7 @@ pub mod init_global_config;
 pub mod update_global_config;
 pub mod create_staking_pool;
 pub mod update_pool_config;
+pub mod oracle;
 
 #[repr(u8)]
 #[derive(ShankInstruction)]
@@ -43,6 +44,12 @@ pub enum StakingInstructions {
     #[account(1, writable, name = "staking_pool_account", desc = "Account that pays for account creation")]
     #[account(2, name = "price_feed_account", desc = "Account that pays for account creation")]
     UpdatePoolConfig = 4,
+
+    #[account(0, writable, signer, name = "oracle_authority", desc = "Authority that can update oracle config")]
+    #[account(1, writable, name = "oracle_config_account", desc = "Oracle configuration account to be created")]
+    #[account(2, name = "price_feed_account", desc = "Price feed account for oracle data")]
+    #[account(3, name = "system_program", desc = "System program for account creation")]
+    InitOracleConfig = 5,
 }
 
 impl TryFrom<&u8> for StakingInstructions {
@@ -55,6 +62,7 @@ impl TryFrom<&u8> for StakingInstructions {
             2 => Ok(StakingInstructions::UpdateProtocolFee),
             3 => Ok(StakingInstructions::CreateStakingPool),
             4 => Ok(StakingInstructions::UpdatePoolConfig),
+            5 => Ok(StakingInstructions::InitOracleConfig),
             _ => Err(ProgramError::InvalidInstructionData)
         }
     }

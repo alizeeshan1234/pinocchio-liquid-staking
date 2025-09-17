@@ -14,7 +14,7 @@ cargo:rerun-if-env-changed=CARGO_FEATURE_NEON
 cargo:rerun-if-env-changed=CARGO_FEATURE_NO_NEON
 cargo:rerun-if-env-changed=CARGO_FEATURE_PURE
 cargo:rustc-cfg=blake3_neon
-OUT_DIR = Some(/Users/mohammedzeeshan/Desktop/staking-platform/target/debug/build/blake3-cb141ba3310f8b73/out)
+OUT_DIR = Some(/Users/mohammedzeeshan/Desktop/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/build/blake3-cb141ba3310f8b73/out)
 OPT_LEVEL = Some(0)
 TARGET = Some(aarch64-apple-darwin)
 HOST = Some(aarch64-apple-darwin)
@@ -41,7 +41,7 @@ HOST_ARFLAGS = None
 ARFLAGS_aarch64_apple_darwin = None
 ARFLAGS_aarch64-apple-darwin = None
 cargo:rustc-link-lib=static=blake3_neon
-cargo:rustc-link-search=native=/Users/mohammedzeeshan/Desktop/staking-platform/target/debug/build/blake3-cb141ba3310f8b73/out
+cargo:rustc-link-search=native=/Users/mohammedzeeshan/Desktop/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/build/blake3-cb141ba3310f8b73/out
 cargo:rerun-if-env-changed=CC
 cargo:rerun-if-env-changed=CFLAGS
 cargo:rerun-if-changed=c/blake3_sse41_x86-64_windows_msvc.asm

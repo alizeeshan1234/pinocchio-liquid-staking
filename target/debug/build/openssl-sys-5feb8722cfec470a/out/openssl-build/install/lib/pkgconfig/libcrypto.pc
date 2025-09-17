@@ -1,4 +1,4 @@
-prefix=/Users/mohammedzeeshan/Desktop/staking-platform/target/debug/build/openssl-sys-5feb8722cfec470a/out/openssl-build/install
+prefix=/Users/mohammedzeeshan/Desktop/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/build/openssl-sys-5feb8722cfec470a/out/openssl-build/install
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include 

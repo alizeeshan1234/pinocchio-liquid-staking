@@ -340,6 +340,57 @@
         "type": "u8",
         "value": 4
       }
+    },
+    {
+      "name": "InitOracleConfig",
+      "accounts": [
+        {
+          "name": "oracleAuthority",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Authority that can update oracle config"
+          ]
+        },
+        {
+          "name": "oracleConfigAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Oracle configuration account to be created"
+          ]
+        },
+        {
+          "name": "priceFeedAccount",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Price feed account for oracle data"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program for account creation"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "updateFrequencySeconds",
+          "type": "i64"
+        },
+        {
+          "name": "currentPrice",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 5
+      }
     }
   ],
   "accounts": [
@@ -392,6 +443,38 @@
           },
           {
             "name": "treasuryBump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OracleConfigInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "priceFeedAccount",
+            "type": "publicKey"
+          },
+          {
+            "name": "updateFrequencySeconds",
+            "type": "i64"
+          },
+          {
+            "name": "oracleAuthority",
+            "type": "publicKey"
+          },
+          {
+            "name": "lastUpdateTimestamp",
+            "type": "i64"
+          },
+          {
+            "name": "currentPrice",
+            "type": "u64"
+          },
+          {
+            "name": "oracleAccountBump",
             "type": "u8"
           }
         ]
@@ -520,6 +603,6 @@
   ],
   "metadata": {
     "origin": "shank",
-    "address": "B8UHx9HNViYwHU94LHu8rwGSL1GkeC9rCb4YdLkT4nex"
+    "address": "CBYABVLbEsnJ3hKb4vLweLFDLQ5Kgic2BYDeuapmbcnH"
   }
 }

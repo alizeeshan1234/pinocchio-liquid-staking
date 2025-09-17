@@ -30,8 +30,9 @@ describe('Staking Program Tests - Debug Version', function () {
     let rewardTokenVaultPda: PublicKey;
     let liquidStakeMintPda: PublicKey;
     let rewardMint: PublicKey;
+    let oracleConfigPda: PublicKey;
 
-    const POOL_ID = 33;
+    const POOL_ID = 388;
     let payer: Keypair;   
     const poolIdBytes = Buffer.alloc(8);
     poolIdBytes.writeBigUInt64LE(BigInt(POOL_ID));
@@ -107,6 +108,11 @@ describe('Staking Program Tests - Debug Version', function () {
 
         [liquidStakeMintPda] = PublicKey.findProgramAddressSync(
             [Buffer.from("liquid_stake_mint"), provider.wallet.publicKey.toBuffer()],
+            programId
+        );
+
+        [oracleConfigPda] = PublicKey.findProgramAddressSync(
+            [Buffer.from("oracle_config_account"), provider.wallet.publicKey.toBuffer()],
             programId
         );
 
@@ -550,4 +556,110 @@ describe('Staking Program Tests - Debug Version', function () {
         const sig = await provider.sendAndConfirm(transaction, []);
         console.log("Transaction Signature:", sig); 
     });
+
+    it("Initialize Oracle Config", async () => {
+    console.log("\n=== Initialize Oracle Config Debug ===");
+    
+    const updateFrequencySeconds = 100;
+    const currentPrice = 200;
+
+    console.log("Input values:");
+    console.log("- Update frequency seconds:", updateFrequencySeconds);
+    console.log("- Current price:", currentPrice);
+
+    let updateFrequencySecondsBuffer = Buffer.alloc(8);
+    updateFrequencySecondsBuffer.writeBigInt64LE(BigInt(updateFrequencySeconds));
+
+    let currentPriceBuffer = Buffer.alloc(8);
+    currentPriceBuffer.writeBigUInt64LE(BigInt(currentPrice));
+
+    console.log("Buffer construction:");
+    console.log("- Update frequency buffer hex:", updateFrequencySecondsBuffer.toString('hex'));
+    console.log("- Current price buffer hex:", currentPriceBuffer.toString('hex'));
+
+    const instructionData = Buffer.concat([
+        updateFrequencySecondsBuffer,
+        currentPriceBuffer
+    ]);
+
+    console.log("- Instruction data length:", instructionData.length);
+    console.log("- Instruction data hex:", instructionData.toString('hex'));
+
+    const finalInstructionData = Buffer.concat([
+        Buffer.from([5]), // discriminator
+        instructionData
+    ]);
+
+    console.log("Final instruction data:");
+    console.log("- Discriminator: 5");
+    console.log("- Final length:", finalInstructionData.length);
+    console.log("- Final hex:", finalInstructionData.toString('hex'));
+
+    // Verify parsing by reading back
+    console.log("\nVerification - parsing back:");
+    const discriminatorCheck = finalInstructionData[0];
+    const dataAfterDisc = finalInstructionData.slice(1);
+    console.log("- Discriminator read back:", discriminatorCheck);
+    console.log("- Data after discriminator length:", dataAfterDisc.length);
+    console.log("- Data after discriminator hex:", dataAfterDisc.toString('hex'));
+
+    if (dataAfterDisc.length === 16) {
+        const parsedUpdateFreq = dataAfterDisc.readBigInt64LE(0);
+        const parsedPrice = dataAfterDisc.readBigUInt64LE(8);
+        console.log("- Parsed update frequency:", parsedUpdateFreq.toString());
+        console.log("- Parsed price:", parsedPrice.toString());
+    } else {
+        console.log("ERROR: Data after discriminator is not 16 bytes!");
+    }
+
+    const priceFeedAccount = Keypair.generate().publicKey;
+
+    console.log("\nAccount keys:");
+    console.log("- Oracle authority (signer):", provider.wallet.publicKey.toString());
+    console.log("- Oracle config PDA:", oracleConfigPda.toString());
+    console.log("- Price feed account:", priceFeedAccount.toString());
+
+    // Check if oracle config account already exists
+    const existingAccount = await connection.getAccountInfo(oracleConfigPda);
+    console.log("- Oracle config account exists:", !!existingAccount);
+    if (existingAccount) {
+        console.log("- Existing account owner:", existingAccount.owner.toString());
+        console.log("- Existing account data length:", existingAccount.data.length);
+    }
+
+    const instruction = new TransactionInstruction({
+        programId: programId,
+        keys: [
+            { pubkey: provider.wallet.publicKey, isSigner: true, isWritable: true },
+            { pubkey: oracleConfigPda, isSigner: false, isWritable: true }, 
+            { pubkey: priceFeedAccount, isSigner: false, isWritable: false },  
+            { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },     
+        ],
+        data: finalInstructionData
+    });
+
+    console.log("\nTransaction instruction:");
+    console.log("- Program ID:", programId.toString());
+    console.log("- Number of keys:", instruction.keys.length);
+    console.log("- Data length:", instruction.data.length);
+
+    const transaction = new Transaction().add(instruction);
+
+    const { blockhash } = await connection.getLatestBlockhash();
+    transaction.recentBlockhash = blockhash;
+    transaction.feePayer = provider.wallet.publicKey;
+
+    console.log("Simulating transaction...");
+    try {
+        const simulationResult = await connection.simulateTransaction(transaction);
+        console.log("Simulation result:", simulationResult);
+    } catch (simError: any) {
+        console.error("Simulation failed:", simError);
+        console.error("Simulation logs:", simError.logs);
+        return; // Don't proceed if simulation fails
+    }
+
+    const sig = await provider.sendAndConfirm(transaction, []);
+    console.log("Transaction Signature:", sig); 
+});
 });

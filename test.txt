@@ -322,7 +322,7 @@
           ]
         }
       ],
-      "args": [
+       "args": [
         {
           "name": "updateTypeDiscriminator",
           "type": "u8"
@@ -339,6 +339,49 @@
       "discriminant": {
         "type": "u8",
         "value": 4
+      }
+    },
+    {
+      "name": "InitOracleConfig",
+      "accounts": [
+        {
+          "name": "oracleAuthority",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "oracleConfigAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "priceFeedAccount",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "updateFrequencySeconds",
+          "type": "i64"
+        },
+        {
+          "name": "currentPrice",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 5
       }
     }
   ],
@@ -392,6 +435,38 @@
           },
           {
             "name": "treasuryBump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OracleConfigInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "priceFeedAccount",
+            "type": "publicKey"
+          },
+          {
+            "name": "updateFrequencySeconds",
+            "type": "i64"
+          },
+          {
+            "name": "oracleAuthority",
+            "type": "publicKey"
+          },
+          {
+            "name": "lastUpdateTimestamp",
+            "type": "i64"
+          },
+          {
+            "name": "currentPrice",
+            "type": "u64"
+          },
+          {
+            "name": "oracleAccountBump",
             "type": "u8"
           }
         ]
@@ -520,6 +595,6 @@
   ],
   "metadata": {
     "origin": "shank",
-    "address": "B8UHx9HNViYwHU94LHu8rwGSL1GkeC9rCb4YdLkT4nex"
+    "address": "CBYABVLbEsnJ3hKb4vLweLFDLQ5Kgic2BYDeuapmbcnH"
   }
 }
