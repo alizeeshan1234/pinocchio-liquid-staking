@@ -422,6 +422,32 @@
         "type": "u8",
         "value": 6
       }
+    },
+    {
+      "name": "GetOraclePrice",
+      "accounts": [
+        {
+          "name": "oracleAuthority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Authority that can update oracle config"
+          ]
+        },
+        {
+          "name": "oracleConfigAccount",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Oracle configuration account to be created"
+          ]
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 7
+      }
     }
   ],
   "accounts": [

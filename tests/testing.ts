@@ -703,4 +703,38 @@ describe('Staking Program Tests - Debug Version', function () {
         const sig = await provider.sendAndConfirm(transaction, []);
         console.log("Transaction Signature:", sig); 
     });
+
+    it("Get Oracle Price", async () => {
+        let finalInstructionData = Buffer.concat([
+            Buffer.from([7]), 
+        ]);
+
+        let instruction = new TransactionInstruction({
+            programId: programId,
+            keys: [
+                { pubkey: provider.wallet.publicKey, isSigner: false, isWritable: false }, 
+                { pubkey: oracleConfigPda, isSigner: false, isWritable: false },          
+            ],
+            data: finalInstructionData
+        });
+
+        const transaction = new Transaction().add(instruction);
+
+        const { blockhash } = await connection.getLatestBlockhash();
+        transaction.recentBlockhash = blockhash;
+        transaction.feePayer = provider.wallet.publicKey;
+
+        console.log("Simulating transaction...");
+        try {
+            const simulationResult = await connection.simulateTransaction(transaction);
+            console.log("Simulation result:", simulationResult);
+        } catch (simError: any) {
+            console.error("Simulation failed:", simError);
+            console.error("Simulation logs:", simError.logs);
+            return;
+        }
+
+        const sig = await provider.sendAndConfirm(transaction, []);
+        console.log("Transaction Signature:", sig); 
+    });
 });

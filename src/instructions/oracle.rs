@@ -1,5 +1,6 @@
 use pinocchio::{account_info::AccountInfo, instruction::Signer, program_error::ProgramError, pubkey::Pubkey, sysvars::{clock::Clock, rent::Rent, Sysvar}, *};
 use pinocchio_system::instructions::CreateAccount;
+use pinocchio_log::log;
 use crate::states::{oracle_config::OracleConfigInfo, helper::AccountData};
 
 pub fn process_init_oracle_config(accounts: &[AccountInfo], instruction_data: &[u8]) -> ProgramResult {
@@ -96,6 +97,30 @@ pub fn process_update_price(accounts: &[AccountInfo], instruction_data: &[u8]) -
     
     oracle_account_info.current_price = new_price;
     oracle_account_info.last_update_timestamp = current_timestamp;
+
+    Ok(())
+}
+
+pub fn get_oracle_price(accounts: &[AccountInfo]) -> ProgramResult {
+
+    let [oracle_authority, oracle_config_account] = accounts else {
+        return Err(ProgramError::NotEnoughAccountKeys);   
+    };
+
+    let (oracle_config_pda, _bump) = pubkey::find_program_address(
+        &[b"oracle_config_account", oracle_authority.key().as_ref()],
+        &crate::ID
+    );
+
+    if *oracle_config_account.key() != oracle_config_pda {
+        return Err(ProgramError::InvalidAccountData);
+    };
+
+    let oracle_account_info = OracleConfigInfo::from_account_info(oracle_config_account)?;
+
+    let current_price = oracle_account_info.current_price;
+
+    log!("Current Price: {}", current_price);
 
     Ok(())
 }

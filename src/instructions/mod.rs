@@ -54,6 +54,10 @@ pub enum StakingInstructions {
     #[account(0, writable, signer, name = "oracle_authority", desc = "Authority that can update oracle config")]
     #[account(1, writable, name = "oracle_config_account", desc = "Oracle configuration account to be created")]
     UpdateOraclePrice = 6,
+
+    #[account(0, name = "oracle_authority", desc = "Authority used for PDA derivation")]
+    #[account(1, name = "oracle_config_account", desc = "Oracle configuration account to read from")]
+    GetOraclePrice = 7,
 }
 
 impl TryFrom<&u8> for StakingInstructions {
@@ -68,6 +72,7 @@ impl TryFrom<&u8> for StakingInstructions {
             4 => Ok(StakingInstructions::UpdatePoolConfig),
             5 => Ok(StakingInstructions::InitOracleConfig),
             6 => Ok(StakingInstructions::UpdateOraclePrice),
+            7 => Ok(StakingInstructions::GetOraclePrice),
             _ => Err(ProgramError::InvalidInstructionData)
         }
     }
