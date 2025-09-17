@@ -6,6 +6,8 @@ pub mod update_global_config;
 pub mod create_staking_pool;
 pub mod update_pool_config;
 pub mod oracle;
+pub mod pause_pool;
+pub mod resume_pool;
 
 #[repr(u8)]
 #[derive(ShankInstruction)]
@@ -58,6 +60,10 @@ pub enum StakingInstructions {
     #[account(0, name = "oracle_authority", desc = "Authority used for PDA derivation")]
     #[account(1, name = "oracle_config_account", desc = "Oracle configuration account to read from")]
     GetOraclePrice = 7,
+
+    #[account(0, name = "authority", desc = "Authority used for PDA derivation")]
+    #[account(1, writable, name = "staking_pool_account", desc = "Account that pays for account creation")]
+    PausePool = 8,
 }
 
 impl TryFrom<&u8> for StakingInstructions {
@@ -73,6 +79,7 @@ impl TryFrom<&u8> for StakingInstructions {
             5 => Ok(StakingInstructions::InitOracleConfig),
             6 => Ok(StakingInstructions::UpdateOraclePrice),
             7 => Ok(StakingInstructions::GetOraclePrice),
+            8 => Ok(StakingInstructions::PausePool),
             _ => Err(ProgramError::InvalidInstructionData)
         }
     }

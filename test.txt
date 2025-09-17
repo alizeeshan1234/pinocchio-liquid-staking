@@ -428,8 +428,8 @@
       "accounts": [
         {
           "name": "oracleAuthority",
-          "isMut": true,
-          "isSigner": true,
+          "isMut": false,
+          "isSigner": false,
           "docs": [
             "Authority that can update oracle config"
           ]
