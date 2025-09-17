@@ -50,6 +50,10 @@ pub enum StakingInstructions {
     #[account(2, name = "price_feed_account", desc = "Price feed account for oracle data")]
     #[account(3, name = "system_program", desc = "System program for account creation")]
     InitOracleConfig = 5,
+
+    #[account(0, writable, signer, name = "oracle_authority", desc = "Authority that can update oracle config")]
+    #[account(1, writable, name = "oracle_config_account", desc = "Oracle configuration account to be created")]
+    UpdateOraclePrice = 6,
 }
 
 impl TryFrom<&u8> for StakingInstructions {
@@ -63,6 +67,7 @@ impl TryFrom<&u8> for StakingInstructions {
             3 => Ok(StakingInstructions::CreateStakingPool),
             4 => Ok(StakingInstructions::UpdatePoolConfig),
             5 => Ok(StakingInstructions::InitOracleConfig),
+            6 => Ok(StakingInstructions::UpdateOraclePrice),
             _ => Err(ProgramError::InvalidInstructionData)
         }
     }

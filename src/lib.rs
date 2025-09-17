@@ -26,6 +26,7 @@ pub fn process_instruction(
         StakingInstructions::CreateStakingPool => instructions::create_staking_pool::process_create_staking_pool(accounts, instruction_data)?,
         StakingInstructions::UpdatePoolConfig => instructions::update_pool_config::process_update_pool_config(accounts, instruction_data)?,
         StakingInstructions::InitOracleConfig => instructions::oracle::process_init_oracle_config(accounts, instruction_data)?,
+        StakingInstructions::UpdateOraclePrice => instructions::oracle::process_update_price(accounts, instruction_data)?
     };
 
     Ok(())

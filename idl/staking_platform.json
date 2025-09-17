@@ -391,6 +391,37 @@
         "type": "u8",
         "value": 5
       }
+    },
+    {
+      "name": "UpdateOraclePrice",
+      "accounts": [
+        {
+          "name": "oracleAuthority",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Authority that can update oracle config"
+          ]
+        },
+        {
+          "name": "oracleConfigAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Oracle configuration account to be created"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "newPrice",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 6
+      }
     }
   ],
   "accounts": [

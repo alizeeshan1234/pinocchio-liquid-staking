@@ -322,7 +322,7 @@
           ]
         }
       ],
-       "args": [
+      "args": [
         {
           "name": "updateTypeDiscriminator",
           "type": "u8"
@@ -349,7 +349,7 @@
           "isMut": true,
           "isSigner": true,
           "docs": [
-            "Account that pays for account creation"
+            "Authority that can update oracle config"
           ]
         },
         {
@@ -357,7 +357,7 @@
           "isMut": true,
           "isSigner": false,
           "docs": [
-            "Account that pays for account creation"
+            "Oracle configuration account to be created"
           ]
         },
         {
@@ -365,7 +365,15 @@
           "isMut": false,
           "isSigner": false,
           "docs": [
-            "Account that pays for account creation"
+            "Price feed account for oracle data"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program for account creation"
           ]
         }
       ],

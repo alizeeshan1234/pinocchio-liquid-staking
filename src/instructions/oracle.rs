@@ -63,3 +63,39 @@ pub fn process_init_oracle_config(accounts: &[AccountInfo], instruction_data: &[
 
     Ok(())
 }
+
+pub fn process_update_price(accounts: &[AccountInfo], instruction_data: &[u8]) -> ProgramResult {
+
+    let [oracle_authority, oracle_config_account] = accounts else {
+        return Err(ProgramError::NotEnoughAccountKeys);
+    };
+
+    if !oracle_authority.is_signer() {
+        return Err(ProgramError::MissingRequiredSignature);
+    };
+
+    let new_price = u64::from_le_bytes(
+        instruction_data[0..8].try_into().map_err(|_| ProgramError::InvalidInstructionData)?
+    );
+
+    let (oracle_config_pda, _bump) = pubkey::find_program_address(
+        &[b"oracle_config_account", oracle_authority.key().as_ref()],
+        &crate::ID
+    );
+
+    if *oracle_config_account.key() != oracle_config_pda {
+        return Err(ProgramError::InvalidAccountData);
+    };
+
+    let mut oracle_account_info = OracleConfigInfo::from_account_info_mut(oracle_config_account)?;
+
+    if oracle_account_info.oracle_authority != *oracle_authority.key() {
+        return Err(ProgramError::InvalidAccountOwner);
+    };
+    let current_timestamp = Clock::get()?.unix_timestamp;
+    
+    oracle_account_info.current_price = new_price;
+    oracle_account_info.last_update_timestamp = current_timestamp;
+
+    Ok(())
+}
