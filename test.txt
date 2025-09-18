@@ -377,7 +377,7 @@
           ]
         }
       ],
-     "args": [
+      "args": [
         {
           "name": "updateFrequencySeconds",
           "type": "i64"
@@ -478,6 +478,37 @@
       "discriminant": {
         "type": "u8",
         "value": 8
+      }
+    },
+    {
+      "name": "ResumePool",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "stakingPoolAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "poolId",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 9
       }
     }
   ],
@@ -691,6 +722,6 @@
   ],
   "metadata": {
     "origin": "shank",
-    "address": "7nFukDdUQBgoy2RCmEvP8Z21G9er13jWbEZxgbXEDSsX"
+    "address": "sqqN7jh5gZ2w2vh5fDg3msYkRfEz1yo79U1SrHNBoeh"
   }
 }
