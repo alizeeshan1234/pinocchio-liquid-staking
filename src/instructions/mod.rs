@@ -64,6 +64,10 @@ pub enum StakingInstructions {
     #[account(0, name = "authority", desc = "Authority used for PDA derivation")]
     #[account(1, writable, name = "staking_pool_account", desc = "Account that pays for account creation")]
     PausePool = 8,
+
+    #[account(0, name = "authority", desc = "Authority used for PDA derivation")]
+    #[account(1, writable, name = "staking_pool_account", desc = "Account that pays for account creation")]
+    ResumePool = 9,
 }
 
 impl TryFrom<&u8> for StakingInstructions {
@@ -80,6 +84,7 @@ impl TryFrom<&u8> for StakingInstructions {
             6 => Ok(StakingInstructions::UpdateOraclePrice),
             7 => Ok(StakingInstructions::GetOraclePrice),
             8 => Ok(StakingInstructions::PausePool),
+            9 => Ok(StakingInstructions::ResumePool),
             _ => Err(ProgramError::InvalidInstructionData)
         }
     }

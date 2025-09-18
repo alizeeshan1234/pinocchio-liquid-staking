@@ -377,7 +377,7 @@
           ]
         }
       ],
-      "args": [
+     "args": [
         {
           "name": "updateFrequencySeconds",
           "type": "i64"
@@ -431,7 +431,7 @@
           "isMut": false,
           "isSigner": false,
           "docs": [
-            "Authority that can update oracle config"
+            "Authority used for PDA derivation"
           ]
         },
         {
@@ -439,7 +439,7 @@
           "isMut": false,
           "isSigner": false,
           "docs": [
-            "Oracle configuration account to be created"
+            "Oracle configuration account to read from"
           ]
         }
       ],
@@ -447,6 +447,37 @@
       "discriminant": {
         "type": "u8",
         "value": 7
+      }
+    },
+    {
+      "name": "PausePool",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "stakingPoolAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "poolId",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 8
       }
     }
   ],
@@ -660,6 +691,6 @@
   ],
   "metadata": {
     "origin": "shank",
-    "address": "CBYABVLbEsnJ3hKb4vLweLFDLQ5Kgic2BYDeuapmbcnH"
+    "address": "7nFukDdUQBgoy2RCmEvP8Z21G9er13jWbEZxgbXEDSsX"
   }
 }

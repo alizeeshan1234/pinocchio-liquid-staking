@@ -778,5 +778,47 @@ describe('Staking Program Tests - Debug Version', function () {
 
         const sig = await provider.sendAndConfirm(transaction, []);
         console.log("Transaction Signature:", sig); 
+    });
+
+    it("Resume Pool", async () => {
+        const poolIdBuffer = Buffer.alloc(8);
+        poolIdBuffer.writeBigUInt64LE(BigInt(POOL_ID));
+
+        let instructionData = Buffer.concat([
+          poolIdBuffer  
+        ]);
+
+        let finalInstructionData = Buffer.concat([
+            Buffer.from([9]),
+            instructionData
+        ]);
+
+        let instruction = new TransactionInstruction({
+            programId: programId,
+            keys: [
+                { pubkey: provider.wallet.publicKey, isSigner: true, isWritable: false }, // ✅ Change to true
+                { pubkey: stakingPoolPda, isSigner: false, isWritable: true }, 
+            ],
+            data: finalInstructionData
+        });
+
+        const transaction = new Transaction().add(instruction);
+
+        const { blockhash } = await connection.getLatestBlockhash();
+        transaction.recentBlockhash = blockhash;
+        transaction.feePayer = provider.wallet.publicKey;
+
+        console.log("Simulating transaction...");
+        try {
+            const simulationResult = await connection.simulateTransaction(transaction);
+            console.log("Simulation result:", simulationResult);
+        } catch (simError: any) {
+            console.error("Simulation failed:", simError);
+            console.error("Simulation logs:", simError.logs);
+            return;
+        }
+
+        const sig = await provider.sendAndConfirm(transaction, []);
+        console.log("Transaction Signature:", sig); 
     })
 });
