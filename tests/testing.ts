@@ -41,7 +41,7 @@ describe('Staking Program Tests - Debug Version', function () {
     const poolIdBytes = Buffer.alloc(8);
     poolIdBytes.writeBigUInt64LE(BigInt(POOL_ID));
 
-    let authorityTokenAccount: PublicKey;
+    let authorityRewardTokenAccount: PublicKey;
 
     before(async function () {
         connection = new Connection('https://api.devnet.solana.com', 'confirmed');
@@ -136,14 +136,14 @@ describe('Staking Program Tests - Debug Version', function () {
 
         userTokenAccount = userTokenAccountAta.address;
 
-        let authorityTokenAccountAta = await getOrCreateAssociatedTokenAccount(
+        let authorityRewardTokenAccountAta = await getOrCreateAssociatedTokenAccount(
             provider.connection,
             payer,
-            rewardMint,
+            rewardMint,  
             provider.wallet.publicKey,
         );
 
-        authorityTokenAccount = authorityTokenAccountAta.address;
+        authorityRewardTokenAccount = authorityRewardTokenAccountAta.address;
 
         [userStakeAccount] = PublicKey.findProgramAddressSync(
             [Buffer.from("user_stake_account"), provider.wallet.publicKey.toBuffer(), globalConfigAccountPda.toBuffer()],
@@ -935,20 +935,11 @@ describe('Staking Program Tests - Debug Version', function () {
     });
 
     it("Fund Reward Vault", async () => {
-        // Create authority reward token account using rewardMint (not mint)
-        let authorityRewardTokenAccount = await getOrCreateAssociatedTokenAccount(
-            provider.connection,
-            payer,
-            rewardMint,  
-            provider.wallet.publicKey,
-        );
-
-        // Mint some reward tokens to authority
         await mintTo(
             provider.connection,
             payer,
             rewardMint,  
-            authorityRewardTokenAccount.address,
+            authorityRewardTokenAccount,
             provider.wallet.publicKey,
             50000
         );
@@ -971,11 +962,10 @@ describe('Staking Program Tests - Debug Version', function () {
             programId: programId,
             keys: [
                 { pubkey: provider.wallet.publicKey, isSigner: true, isWritable: true },          
-                { pubkey: authorityRewardTokenAccount.address, isSigner: false, isWritable: true }, 
+                { pubkey: authorityRewardTokenAccount, isSigner: false, isWritable: true }, 
                 { pubkey: rewardMint, isSigner: false, isWritable: false },                        
                 { pubkey: rewardTokenVaultPda, isSigner: false, isWritable: true },                
-                { pubkey: stakingPoolPda, isSigner: false, isWritable: false },                     
-                { pubkey: globalConfigAccountPda, isSigner: false, isWritable: true },            
+                { pubkey: stakingPoolPda, isSigner: false, isWritable: false },                            
                 { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },                  
             ],
             data: finalInstructionData
@@ -986,14 +976,6 @@ describe('Staking Program Tests - Debug Version', function () {
         const { blockhash } = await connection.getLatestBlockhash();
         transaction.recentBlockhash = blockhash;
         transaction.feePayer = provider.wallet.publicKey;
-
-        console.log("Debug info:");
-        console.log("- Authority:", provider.wallet.publicKey.toString());
-        console.log("- Authority reward token account:", authorityRewardTokenAccount.address.toString());
-        console.log("- Reward mint:", rewardMint.toString());
-        console.log("- Reward vault PDA:", rewardTokenVaultPda.toString());
-        console.log("- Reward amount:", rewardAmount.toString());
-
         const sig = await provider.sendAndConfirm(transaction, []);
         console.log("Transaction Signature:", sig); 
 

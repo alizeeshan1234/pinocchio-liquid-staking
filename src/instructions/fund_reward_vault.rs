@@ -10,7 +10,6 @@ pub fn process_fund_reward_vault(accounts: &[AccountInfo], instruction_data: &[u
         reward_token_mint,
         reward_token_vault,
         staking_pool_account,
-        global_config_account,
         token_program
     ] = accounts else {
         return Err(ProgramError::InvalidAccountData);
@@ -42,9 +41,9 @@ pub fn process_fund_reward_vault(accounts: &[AccountInfo], instruction_data: &[u
         return Err(ProgramError::InvalidAccountData);
     };
 
-    // if staking_pool_info.emergency_pause_flag {
-    //     return Err(ProgramError::InvalidAccountData);
-    // };
+    if staking_pool_info.emergency_pause_flag {
+        return Err(ProgramError::InvalidAccountData);
+    };
 
     let authority_token_info = TokenAccount::from_account_info(authority_token_account)?;
     let reward_vault_info = TokenAccount::from_account_info(reward_token_vault)?;
@@ -62,10 +61,6 @@ pub fn process_fund_reward_vault(accounts: &[AccountInfo], instruction_data: &[u
     };
 
     if *reward_vault_info.mint() != *reward_token_mint.key() {
-        return Err(ProgramError::InvalidAccountData);
-    };
-
-    if *reward_vault_info.owner() != *global_config_account.key() {
         return Err(ProgramError::InvalidAccountData);
     };
 

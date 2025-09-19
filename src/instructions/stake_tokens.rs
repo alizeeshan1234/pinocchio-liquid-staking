@@ -229,6 +229,11 @@ pub fn process_stake_tokens(accounts: &[AccountInfo], instruction_data: &[u8]) -
             0
         },
         is_active: true,
+        auto_compound_enabled: false,
+        min_compound_amount: 0,
+        compound_frequency_hours: 0,
+        last_compound_timestamp: 0,
+        compound_count: 0,
         bump: 0,
     };
 

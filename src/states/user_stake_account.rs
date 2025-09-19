@@ -55,6 +55,11 @@ pub struct StakePosition {
     pub lock_exipry_enable: bool,
     pub lock_expiry: i64,
     pub is_active: bool,
+    pub auto_compound_enabled: bool,
+    pub min_compound_amount: u64,
+    pub compound_frequency_hours: u32,
+    pub last_compound_timestamp: i64,
+    pub compound_count: u32,
     pub bump: u8,
 }
 

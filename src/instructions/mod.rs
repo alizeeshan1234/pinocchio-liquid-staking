@@ -12,6 +12,13 @@ pub mod deprecate_pool;
 pub mod initi_user_stake_account;
 pub mod fund_reward_vault;
 pub mod stake_tokens;
+pub mod increase_stake;
+pub mod unstake_tokens;
+pub mod withdraw_funds;
+pub mod claim_rewards;
+pub mod enable_auto_compound;
+pub mod disable_auto_compound;
+pub mod execute_auto_compound;
 
 #[repr(u8)]
 #[derive(ShankInstruction)]
@@ -88,10 +95,9 @@ pub enum StakingInstructions {
     #[account(0, writable, signer, name = "authority", desc = "Authority used for PDA derivation")]
     #[account(1, writable, name = "authority_token_account", desc = "Authority used for PDA derivation")]
     #[account(2, name = "reward_token_mint", desc = "Authority used for PDA derivation")]
-    #[account(3, name = "reward_token_vault", desc = "Authority used for PDA derivation")]
+    #[account(3, writable, name = "reward_token_vault", desc = "Authority used for PDA derivation")]
     #[account(4, name = "staking_pool_account", desc = "Authority used for PDA derivation")]
-    #[account(5, name = "global_config_account", desc = "Authority used for PDA derivation")]
-    #[account(6, name = "token_program", desc = "Token program")]
+    #[account(5, name = "token_program", desc = "Token program")]
     FundRewardVault = 12,
 
     #[account(0, writable, signer, name = "user", desc = "Staker")]
@@ -107,6 +113,22 @@ pub enum StakingInstructions {
     #[account(10, writable, name = "user_lst_token_account", desc = "User's LST token account")]
     #[account(11, name = "token_program", desc = "Token program")]
     StakeTokens = 13,
+
+    IncreaseStake = 14,
+
+    UnstakeTokens = 15,
+
+    WithdrawFunds = 16,
+
+    ClaimRewards = 17,
+
+    ClaimAllRewards = 18,
+
+    EnableAutoCompound = 19,
+
+    DisableAutoCompound = 20,
+
+    ExecuteAutoCompound = 21,
 }
 
 impl TryFrom<&u8> for StakingInstructions {
@@ -128,6 +150,14 @@ impl TryFrom<&u8> for StakingInstructions {
             11 => Ok(StakingInstructions::InitUserStakeAccount),
             12 => Ok(StakingInstructions::FundRewardVault),
             13 => Ok(StakingInstructions::StakeTokens),
+            14 => Ok(StakingInstructions::IncreaseStake),
+            15 => Ok(StakingInstructions::UnstakeTokens),
+            16 => Ok(StakingInstructions::WithdrawFunds),
+            17 => Ok(StakingInstructions::ClaimRewards),
+            18 => Ok(StakingInstructions::ClaimAllRewards),
+            19 => Ok(StakingInstructions::EnableAutoCompound),
+            20 => Ok(StakingInstructions::DisableAutoCompound),
+            21 => Ok(StakingInstructions::EnableAutoCompound),
             _ => Err(ProgramError::InvalidInstructionData)
         }
     }

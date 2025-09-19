@@ -124,7 +124,7 @@
           ]
         }
       ],
-      "args": [
+       "args": [
         {
           "name": "newProtocolFeeRate",
           "type": "u16"
@@ -629,7 +629,7 @@
         },
         {
           "name": "rewardTokenVault",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false,
           "docs": [
             "Authority used for PDA derivation"
@@ -637,14 +637,6 @@
         },
         {
           "name": "stakingPoolAccount",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "Authority used for PDA derivation"
-          ]
-        },
-        {
-          "name": "globalConfigAccount",
           "isMut": false,
           "isSigner": false,
           "docs": [
@@ -997,6 +989,6 @@
   ],
   "metadata": {
     "origin": "shank",
-    "address": "HWWP9q6QaWeyoXBLXLBXK7a15TpTKVp9hDhsqp55E6Ay"
+    "address": "AxTzuiQFJVbaRwFjshTSdAHxsCHu1iTYzfPZYG41qJd"
   }
 }

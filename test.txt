@@ -629,7 +629,7 @@
         },
         {
           "name": "rewardTokenVault",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false,
           "docs": [
             "Authority used for PDA derivation"
@@ -679,7 +679,7 @@
           "isMut": true,
           "isSigner": true,
           "docs": [
-            "Authority used for PDA derivation"
+            "Staker"
           ]
         },
         {
@@ -687,7 +687,7 @@
           "isMut": false,
           "isSigner": false,
           "docs": [
-            "Authority used for PDA derivation"
+            "Global config authority"
           ]
         },
         {
@@ -695,7 +695,7 @@
           "isMut": false,
           "isSigner": false,
           "docs": [
-            "Account that pays for account creation"
+            "Pool creator"
           ]
         },
         {
@@ -703,15 +703,15 @@
           "isMut": false,
           "isSigner": false,
           "docs": [
-            "Account that pays for account creation"
+            "Token being staked"
           ]
         },
         {
           "name": "stakeTokenVault",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false,
           "docs": [
-            "Account that pays for account creation"
+            "Where staked tokens go"
           ]
         },
         {
@@ -719,7 +719,7 @@
           "isMut": true,
           "isSigner": false,
           "docs": [
-            "Liquid stake mint"
+            "LST mint"
           ]
         },
         {
@@ -727,7 +727,7 @@
           "isMut": true,
           "isSigner": false,
           "docs": [
-            "Account that pays for account creation"
+            "Global config PDA"
           ]
         },
         {
@@ -735,7 +735,7 @@
           "isMut": true,
           "isSigner": false,
           "docs": [
-            "Account that pays for account creation"
+            "Pool account"
           ]
         },
         {
@@ -743,7 +743,7 @@
           "isMut": true,
           "isSigner": false,
           "docs": [
-            "Account that pays for account creation"
+            "User's source token account"
           ]
         },
         {
@@ -751,7 +751,7 @@
           "isMut": true,
           "isSigner": false,
           "docs": [
-            "Account that pays for account creation"
+            "User's stake position account"
           ]
         },
         {
@@ -759,7 +759,7 @@
           "isMut": true,
           "isSigner": false,
           "docs": [
-            "Liquid stake mint"
+            "User's LST token account"
           ]
         },
         {
@@ -997,6 +997,6 @@
   ],
   "metadata": {
     "origin": "shank",
-    "address": "HWWP9q6QaWeyoXBLXLBXK7a15TpTKVp9hDhsqp55E6Ay"
+    "address": "AxTzuiQFJVbaRwFjshTSdAHxsCHu1iTYzfPZYG41qJd"
   }
 }

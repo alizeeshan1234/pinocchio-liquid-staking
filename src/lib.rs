@@ -4,7 +4,7 @@ pub use pinocchio_pubkey::declare_id;
 
 use crate::instructions::StakingInstructions;
 
-declare_id!("HWWP9q6QaWeyoXBLXLBXK7a15TpTKVp9hDhsqp55E6Ay");
+declare_id!("AxTzuiQFJVbaRwFjshTSdAHxsCHu1iTYzfPZYG41qJd");
 
 entrypoint!(process_instruction);
 
@@ -33,7 +33,15 @@ pub fn process_instruction(
         StakingInstructions::DeprecatePool => instructions::deprecate_pool::process_deprecate_pool(accounts, instruction_data)?,
         StakingInstructions::InitUserStakeAccount => instructions::initi_user_stake_account::process_initialize_user_stake_account(accounts)?,
         StakingInstructions::FundRewardVault => instructions::fund_reward_vault::process_fund_reward_vault(accounts, instruction_data)?,
-        StakingInstructions::StakeTokens => instructions::stake_tokens::process_stake_tokens(accounts, instruction_data)?
+        StakingInstructions::StakeTokens => instructions::stake_tokens::process_stake_tokens(accounts, instruction_data)?,
+        StakingInstructions::IncreaseStake => instructions::increase_stake::process_increase_stake(accounts, instruction_data)?,
+        StakingInstructions::UnstakeTokens => instructions::unstake_tokens::process_unstake(accounts, instruction_data)?,
+        StakingInstructions::WithdrawFunds => instructions::withdraw_funds::process_emergency_withdraw(accounts, instruction_data)?,
+        StakingInstructions::ClaimRewards => instructions::claim_rewards::process_claim_rewards(accounts, instruction_data)?,
+        StakingInstructions::ClaimAllRewards => instructions::claim_rewards::process_claim_all_rewards(accounts, instruction_data)?,
+        StakingInstructions::EnableAutoCompound => instructions::enable_auto_compound::process_enable_auto_compound(accounts, instruction_data)?,
+        StakingInstructions::DisableAutoCompound => instructions::disable_auto_compound::process_disable_auto_compound(accounts, instruction_data)?,
+        StakingInstructions::ExecuteAutoCompound => instructions::execute_auto_compound::process_execute_auto_compound(accounts, instruction_data)?
     };
 
     Ok(())
