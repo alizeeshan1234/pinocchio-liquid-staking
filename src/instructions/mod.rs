@@ -10,6 +10,7 @@ pub mod pause_pool;
 pub mod resume_pool;
 pub mod deprecate_pool;
 pub mod initi_user_stake_account;
+pub mod fund_reward_vault;
 
 #[repr(u8)]
 #[derive(ShankInstruction)]
@@ -82,6 +83,15 @@ pub enum StakingInstructions {
     #[account(4, writable, name = "user_stake_account", desc = "Account that pays for account creation")]
     #[account(5, name = "system_program", desc = "System program for account creation")]
     InitUserStakeAccount = 11,
+
+    #[account(0, writable, signer, name = "authority", desc = "Authority used for PDA derivation")]
+    #[account(1, writable, name = "authority_token_account", desc = "Authority used for PDA derivation")]
+    #[account(2, name = "reward_token_mint", desc = "Authority used for PDA derivation")]
+    #[account(3, name = "reward_token_vault", desc = "Authority used for PDA derivation")]
+    #[account(4, name = "staking_pool_account", desc = "Authority used for PDA derivation")]
+    #[account(5, name = "global_config_account", desc = "Authority used for PDA derivation")]
+    #[account(6, name = "token_program", desc = "Token program")]
+    FundRewardVault = 12,
 }
 
 impl TryFrom<&u8> for StakingInstructions {
@@ -101,6 +111,7 @@ impl TryFrom<&u8> for StakingInstructions {
             9 => Ok(StakingInstructions::ResumePool),
             10 => Ok(StakingInstructions::DeprecatePool),
             11 => Ok(StakingInstructions::InitUserStakeAccount),
+            12 => Ok(StakingInstructions::FundRewardVault),
             _ => Err(ProgramError::InvalidInstructionData)
         }
     }

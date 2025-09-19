@@ -599,6 +599,77 @@
         "type": "u8",
         "value": 11
       }
+    },
+    {
+      "name": "FundRewardVault",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "authorityTokenAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "rewardTokenMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "rewardTokenVault",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "stakingPoolAccount",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "globalConfigAccount",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "rewardAmount",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 12
+      }
     }
   ],
   "accounts": [
@@ -811,6 +882,6 @@
   ],
   "metadata": {
     "origin": "shank",
-    "address": "7asNo9xCKJ3X6mhZzv2MLdZs55GWi16xL3k1xYEQk4vm"
+    "address": "6r46MMrgLFkFGBnride3pHqtoManQ5F9U84xPXyiwtPg"
   }
 }

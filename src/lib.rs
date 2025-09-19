@@ -4,7 +4,7 @@ pub use pinocchio_pubkey::declare_id;
 
 use crate::instructions::StakingInstructions;
 
-declare_id!("7asNo9xCKJ3X6mhZzv2MLdZs55GWi16xL3k1xYEQk4vm");
+declare_id!("6r46MMrgLFkFGBnride3pHqtoManQ5F9U84xPXyiwtPg");
 
 entrypoint!(process_instruction);
 
@@ -32,6 +32,7 @@ pub fn process_instruction(
         StakingInstructions::ResumePool => instructions::resume_pool::process_resume_pool(accounts, instruction_data)?,
         StakingInstructions::DeprecatePool => instructions::deprecate_pool::process_deprecate_pool(accounts, instruction_data)?,
         StakingInstructions::InitUserStakeAccount => instructions::initi_user_stake_account::process_initialize_user_stake_account(accounts)?,
+        StakingInstructions::FundRewardVault => instructions::fund_reward_vault::process_fund_reward_vault(accounts, instruction_data)?,
     };
 
     Ok(())
