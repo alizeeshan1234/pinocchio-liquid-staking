@@ -2,7 +2,7 @@ use pinocchio::{account_info::AccountInfo, instruction::Signer, program_error::P
 use pinocchio_system::instructions::CreateAccount;
 use pinocchio_log::log;
 
-use crate::states::{helper::AccountData, user_stake_account::{StakePosition, UserStakeAccount, MAX_POSITIONS}};
+use crate::states::{helper::AccountData, user_stake_account::{ClaimEvent, PenaltyEvent, StakePosition, UserStakeAccount, MAX_HISTORY, MAX_POSITIONS}};
 
 pub fn process_initialize_user_stake_account(accounts: &[AccountInfo]) -> ProgramResult {
 
@@ -71,6 +71,19 @@ pub fn process_initialize_user_stake_account(accounts: &[AccountInfo]) -> Progra
     user_stake_account_info.creation_timestamp = Clock::get()?.unix_timestamp;
     user_stake_account_info.is_paused = false;
     user_stake_account_info.positions = [StakePosition::default(); MAX_POSITIONS];
+    
+    user_stake_account_info.total_earned = 0;
+    user_stake_account_info.total_claimed = 0;
+    user_stake_account_info.pending_rewards = 0;
+    user_stake_account_info.last_claim_timestamp = 0;
+    user_stake_account_info.last_update_timestamp = 0;
+    user_stake_account_info.claim_history = [ClaimEvent::default(); MAX_HISTORY];
+
+    user_stake_account_info.total_penalties = 0;
+    user_stake_account_info.active_penalties = 0;
+    user_stake_account_info.penalty_type_count = 0;
+    user_stake_account_info.penalty_history = [PenaltyEvent::default(); MAX_HISTORY];
+
     user_stake_account_info.bump = user_stake_account_bump;
 
     log!("User Stake Account Initialized Successfully!");
