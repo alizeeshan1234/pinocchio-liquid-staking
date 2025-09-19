@@ -9,6 +9,7 @@ pub mod oracle;
 pub mod pause_pool;
 pub mod resume_pool;
 pub mod deprecate_pool;
+pub mod initi_user_stake_account;
 
 #[repr(u8)]
 #[derive(ShankInstruction)]
@@ -73,6 +74,14 @@ pub enum StakingInstructions {
     #[account(0, name = "authority", desc = "Authority used for PDA derivation")]
     #[account(1, writable, name = "staking_pool_account", desc = "Account that pays for account creation")]
     DeprecatePool = 10,
+
+    #[account(0, writable, name = "user", desc = "Account that pays for account creation")]
+    #[account(1, writable, name = "authority", desc = "Account that pays for account creation")]
+    #[account(2, name = "global_config_account", desc = "Account that pays for account creation")]
+    #[account(3, name = "user_token_account", desc = "Account that pays for account creation")]
+    #[account(4, writable, name = "user_stake_account", desc = "Account that pays for account creation")]
+    #[account(5, name = "system_program", desc = "System program for account creation")]
+    InitUserStakeAccount = 11,
 }
 
 impl TryFrom<&u8> for StakingInstructions {
@@ -91,6 +100,7 @@ impl TryFrom<&u8> for StakingInstructions {
             8 => Ok(StakingInstructions::PausePool),
             9 => Ok(StakingInstructions::ResumePool),
             10 => Ok(StakingInstructions::DeprecatePool),
+            11 => Ok(StakingInstructions::InitUserStakeAccount),
             _ => Err(ProgramError::InvalidInstructionData)
         }
     }

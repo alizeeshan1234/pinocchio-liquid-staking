@@ -510,6 +510,37 @@
         "type": "u8",
         "value": 9
       }
+    },
+    {
+      "name": "DeprecatePool",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "stakingPoolAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "poolId",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 10
+      }
     }
   ],
   "accounts": [
@@ -722,6 +753,6 @@
   ],
   "metadata": {
     "origin": "shank",
-    "address": "sqqN7jh5gZ2w2vh5fDg3msYkRfEz1yo79U1SrHNBoeh"
+    "address": "JAPJb3Gzq9dDqyX54ubXDonyEurUQL4sWzjYNX49SSkq"
   }
 }

@@ -541,6 +541,64 @@
         "type": "u8",
         "value": 10
       }
+    },
+    {
+      "name": "InitUserStakeAccount",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "globalConfigAccount",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "userTokenAccount",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "userStakeAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "System program for account creation"
+          ]
+        }
+      ],
+      "args": [],
+      "discriminant": {
+        "type": "u8",
+        "value": 11
+      }
     }
   ],
   "accounts": [
@@ -753,6 +811,6 @@
   ],
   "metadata": {
     "origin": "shank",
-    "address": "eRFTAFNWmFXgit8Aidnry3VnqxVLA15gyMVkp73xjW4"
+    "address": "7asNo9xCKJ3X6mhZzv2MLdZs55GWi16xL3k1xYEQk4vm"
   }
 }

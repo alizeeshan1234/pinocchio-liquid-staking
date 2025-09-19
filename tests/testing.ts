@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { Connection, PublicKey, Keypair, SystemProgram, Transaction, TransactionInstruction } from '@solana/web3.js';
 import { AnchorProvider, Wallet } from '@coral-xyz/anchor';
 import fs from "fs";
-import { createMint, TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { createMint, TOKEN_PROGRAM_ID, getOrCreateAssociatedTokenAccount } from "@solana/spl-token";
 
 const idl = JSON.parse(
     fs.readFileSync("./idl/staking_platform.json", "utf-8")
@@ -31,8 +31,10 @@ describe('Staking Program Tests - Debug Version', function () {
     let liquidStakeMintPda: PublicKey;
     let rewardMint: PublicKey;
     let oracleConfigPda: PublicKey;
+    let userTokenAccount: PublicKey;
+    let userStakeAccount: PublicKey;
 
-    const POOL_ID = 777;
+    const POOL_ID = 778;
     let payer: Keypair;   
     const poolIdBytes = Buffer.alloc(8);
     poolIdBytes.writeBigUInt64LE(BigInt(POOL_ID));
@@ -120,6 +122,20 @@ describe('Staking Program Tests - Debug Version', function () {
         console.log("Global Config PDA:", globalConfigAccountPda.toString());
         console.log("Treasury PDA:", treasuryAccountPda.toString());
         console.log("Mint:", mint.toString());
+
+        let userTokenAccountAta = await getOrCreateAssociatedTokenAccount(
+            provider.connection,
+            payer,
+            mint,
+            provider.wallet.publicKey,
+        );
+
+        userTokenAccount = userTokenAccountAta.address;
+
+        [userStakeAccount] = PublicKey.findProgramAddressSync(
+            [Buffer.from("user_stake_account"), provider.wallet.publicKey.toBuffer(), globalConfigAccountPda.toBuffer()],
+            programId
+        );
     });
 
     it("Initialize Global Config Account - Debug", async () => {
@@ -840,6 +856,44 @@ describe('Staking Program Tests - Debug Version', function () {
             keys: [
                 { pubkey: provider.wallet.publicKey, isSigner: false, isWritable: false }, 
                 { pubkey: stakingPoolPda, isSigner: false, isWritable: true }, 
+            ],
+            data: finalInstructionData
+        });
+
+        const transaction = new Transaction().add(instruction);
+
+        const { blockhash } = await connection.getLatestBlockhash();
+        transaction.recentBlockhash = blockhash;
+        transaction.feePayer = provider.wallet.publicKey;
+
+        console.log("Simulating transaction...");
+        try {
+            const simulationResult = await connection.simulateTransaction(transaction);
+            console.log("Simulation result:", simulationResult);
+        } catch (simError: any) {
+            console.error("Simulation failed:", simError);
+            console.error("Simulation logs:", simError.logs);
+            return;
+        }
+
+        const sig = await provider.sendAndConfirm(transaction, []);
+        console.log("Transaction Signature:", sig); 
+    });
+
+    it("Initialize User Stake Account", async () => {
+        let finalInstructionData = Buffer.concat([
+            Buffer.from([11]),
+        ]);
+
+         let instruction = new TransactionInstruction({
+            programId: programId,
+            keys: [
+                { pubkey: provider.wallet.publicKey, isSigner: true, isWritable: false }, 
+                { pubkey: provider.wallet.publicKey, isSigner: false, isWritable: false }, 
+                { pubkey: globalConfigAccountPda, isSigner: false, isWritable: true }, 
+                { pubkey: userTokenAccount, isSigner: false, isWritable: true }, 
+                { pubkey: userStakeAccount, isSigner: false, isWritable: true }, 
+                { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },     
             ],
             data: finalInstructionData
         });
