@@ -94,6 +94,18 @@ pub enum StakingInstructions {
     #[account(6, name = "token_program", desc = "Token program")]
     FundRewardVault = 12,
 
+    #[account(0, writable, signer, name = "user", desc = "Staker")]
+    #[account(1, name = "authority", desc = "Global config authority")]
+    #[account(2, name = "creator", desc = "Pool creator")]
+    #[account(3, name = "stake_token_mint", desc = "Token being staked")]
+    #[account(4, writable, name = "stake_token_vault", desc = "Where staked tokens go")]
+    #[account(5, writable, name = "liquid_stake_mint", desc = "LST mint")]
+    #[account(6, writable, name = "global_config_account", desc = "Global config PDA")]
+    #[account(7, writable, name = "staking_pool_account", desc = "Pool account")]
+    #[account(8, writable, name = "user_token_account", desc = "User's source token account")]
+    #[account(9, writable, name = "user_stake_account", desc = "User's stake position account")]
+    #[account(10, writable, name = "user_lst_token_account", desc = "User's LST token account")]
+    #[account(11, name = "token_program", desc = "Token program")]
     StakeTokens = 13,
 }
 

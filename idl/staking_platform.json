@@ -656,7 +656,7 @@
           "isMut": false,
           "isSigner": false,
           "docs": [
-            "Authority used for PDA derivation"
+            "Token program"
           ]
         }
       ],
@@ -669,6 +669,121 @@
       "discriminant": {
         "type": "u8",
         "value": 12
+      }
+    },
+    {
+      "name": "StakeTokens",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Staker"
+          ]
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Global config authority"
+          ]
+        },
+        {
+          "name": "creator",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Pool creator"
+          ]
+        },
+        {
+          "name": "stakeTokenMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token being staked"
+          ]
+        },
+        {
+          "name": "stakeTokenVault",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Where staked tokens go"
+          ]
+        },
+        {
+          "name": "liquidStakeMint",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "LST mint"
+          ]
+        },
+        {
+          "name": "globalConfigAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Global config PDA"
+          ]
+        },
+        {
+          "name": "stakingPoolAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Pool account"
+          ]
+        },
+        {
+          "name": "userTokenAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "User's source token account"
+          ]
+        },
+        {
+          "name": "userStakeAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "User's stake position account"
+          ]
+        },
+        {
+          "name": "userLstTokenAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "User's LST token account"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "poolId",
+          "type": "u64"
+        },
+        {
+          "name": "stakeAmount",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 13
       }
     }
   ],
@@ -882,6 +997,6 @@
   ],
   "metadata": {
     "origin": "shank",
-    "address": "7SW1iRCvFzKjyp3yDXewnP4r3a4BHtpps5zh2Zfp2s9r"
+    "address": "HWWP9q6QaWeyoXBLXLBXK7a15TpTKVp9hDhsqp55E6Ay"
   }
 }

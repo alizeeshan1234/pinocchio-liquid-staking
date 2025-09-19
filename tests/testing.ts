@@ -34,7 +34,9 @@ describe('Staking Program Tests - Debug Version', function () {
     let userTokenAccount: PublicKey;
     let userStakeAccount: PublicKey;
 
-    const POOL_ID = 987;
+    let userLstTokenAccount: PublicKey;
+
+    const POOL_ID = 9838;
     let payer: Keypair;   
     const poolIdBytes = Buffer.alloc(8);
     poolIdBytes.writeBigUInt64LE(BigInt(POOL_ID));
@@ -973,7 +975,7 @@ describe('Staking Program Tests - Debug Version', function () {
                 { pubkey: rewardMint, isSigner: false, isWritable: false },                        
                 { pubkey: rewardTokenVaultPda, isSigner: false, isWritable: true },                
                 { pubkey: stakingPoolPda, isSigner: false, isWritable: false },                     
-                { pubkey: globalConfigAccountPda, isSigner: false, isWritable: false },            
+                { pubkey: globalConfigAccountPda, isSigner: false, isWritable: true },            
                 { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },                  
             ],
             data: finalInstructionData
@@ -996,5 +998,71 @@ describe('Staking Program Tests - Debug Version', function () {
         console.log("Transaction Signature:", sig); 
 
     });
+
+    it("Stake Tokens", async () => {
+        await mintTo(
+            provider.connection,
+            payer,
+            mint,  // Your stake token mint
+            userTokenAccount,
+            provider.wallet.publicKey,
+            50000  // Amount to mint
+        );
+
+        let userLstTokenAccountAta = await getOrCreateAssociatedTokenAccount(
+            provider.connection,
+            payer,
+            liquidStakeMintPda,
+            provider.wallet.publicKey,
+        );
+
+        userLstTokenAccount = userLstTokenAccountAta.address;
+
+        const poolIdBuffer = Buffer.alloc(8);
+        poolIdBuffer.writeBigUInt64LE(BigInt(POOL_ID));
+
+        let stakeAmount = 10000;
+
+        const stakeAmountBuffer = Buffer.alloc(8);
+        stakeAmountBuffer.writeBigUInt64LE(BigInt(stakeAmount));
+
+        let instructionData = Buffer.concat([
+          poolIdBuffer,
+          stakeAmountBuffer
+        ]);
+
+        let finalInstructionData = Buffer.concat([
+            Buffer.from([13]),
+            instructionData
+        ]);
+
+        let instruction = new TransactionInstruction({
+            programId: programId,
+            keys: [
+                { pubkey: provider.wallet.publicKey, isSigner: true, isWritable: true },     // user
+                { pubkey: provider.wallet.publicKey, isSigner: false, isWritable: false },   // authority  
+                { pubkey: provider.wallet.publicKey, isSigner: false, isWritable: false },   // creator
+                { pubkey: mint, isSigner: false, isWritable: false },                        // stake_token_mint
+                { pubkey: stakeTokenVaultPda, isSigner: false, isWritable: true },           // stake_token_vault
+                { pubkey: liquidStakeMintPda, isSigner: false, isWritable: true },           // liquid_stake_mint
+                { pubkey: globalConfigAccountPda, isSigner: false, isWritable: true },       // global_config_account
+                { pubkey: stakingPoolPda, isSigner: false, isWritable: true },               // staking_pool_account
+                { pubkey: userTokenAccount, isSigner: false, isWritable: true },             // user_token_account
+                { pubkey: userStakeAccount, isSigner: false, isWritable: true },             // user_stake_account
+                { pubkey: userLstTokenAccount, isSigner: false, isWritable: true },          // user_lst_token_account
+                { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },            // token_program
+            ],
+            data: finalInstructionData
+        });
+
+        const transaction = new Transaction().add(instruction);
+
+        const { blockhash } = await connection.getLatestBlockhash();
+        transaction.recentBlockhash = blockhash;
+        transaction.feePayer = provider.wallet.publicKey;
+
+        const sig = await provider.sendAndConfirm(transaction, []);
+        console.log("Transaction Signature:", sig); 
+    })
 
 });

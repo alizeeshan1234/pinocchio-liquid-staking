@@ -599,6 +599,192 @@
         "type": "u8",
         "value": 11
       }
+    },
+    {
+      "name": "FundRewardVault",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "authorityTokenAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "rewardTokenMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "rewardTokenVault",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "stakingPoolAccount",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "globalConfigAccount",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "rewardAmount",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 12
+      }
+    },
+    {
+      "name": "StakeTokens",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Authority used for PDA derivation"
+          ]
+        },
+        {
+          "name": "creator",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "stakeTokenMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "stakeTokenVault",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "liquidStakeMint",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Liquid stake mint"
+          ]
+        },
+        {
+          "name": "globalConfigAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "stakingPoolAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "userTokenAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "userStakeAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Account that pays for account creation"
+          ]
+        },
+        {
+          "name": "userLstTokenAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Liquid stake mint"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token program"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "poolId",
+          "type": "u64"
+        },
+        {
+          "name": "stakeAmount",
+          "type": "u64"
+        }
+      ],
+      "discriminant": {
+        "type": "u8",
+        "value": 13
+      }
     }
   ],
   "accounts": [
@@ -811,6 +997,6 @@
   ],
   "metadata": {
     "origin": "shank",
-    "address": "7asNo9xCKJ3X6mhZzv2MLdZs55GWi16xL3k1xYEQk4vm"
+    "address": "HWWP9q6QaWeyoXBLXLBXK7a15TpTKVp9hDhsqp55E6Ay"
   }
 }
