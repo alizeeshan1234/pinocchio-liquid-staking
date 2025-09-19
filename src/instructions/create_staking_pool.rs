@@ -1,11 +1,9 @@
 use pinocchio::{account_info::AccountInfo, instruction::Signer, program_error::ProgramError, pubkey::Pubkey, sysvars::{clock::Clock, rent::Rent, Sysvar}, *};
 use pinocchio_system::instructions::CreateAccount;
-use pinocchio_token::{instructions::{InitializeAccount3, InitializeMint, InitializeMint2}, state::{Mint, TokenAccount}};
-use pinocchio_log::log;
+use pinocchio_token::{instructions::{InitializeAccount3, InitializeMint2}, state::{Mint, TokenAccount}};
 use crate::states::{global_config::GlobalConfig, helper::AccountData, staking_pool_account::{PoolStatusEnum, SlashTypeEnum, StakingPool}};
 
 const MAX_POOLS: usize = 10;
-const POOL_STATUS_ACTIVE: u8 = 0;
 
 pub fn process_create_staking_pool(accounts: &[AccountInfo], instruction_data: &[u8]) -> ProgramResult {
     let [
