@@ -271,7 +271,10 @@ fn calculate_position_rewards(
     }
 
     let time_elapsed = current_timestamp.saturating_sub(position.last_reward_update);
-    
+    if time_elapsed == 0 {
+        return Ok(0);
+    };
+
     if time_elapsed <= 0 {
         return Ok(0);
     }
