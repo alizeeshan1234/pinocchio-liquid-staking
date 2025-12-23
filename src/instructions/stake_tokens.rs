@@ -21,7 +21,6 @@ pub fn process_stake_tokens(accounts: &[AccountInfo], instruction_data: &[u8]) -
         user_token_account,     // User's source token account
         user_stake_account,     // User's stake position account
         user_lst_token_account, // User's LST token account
-        token_program,          // Token program
     ] = accounts else {
         return Err(ProgramError::InvalidAccountData);
     };

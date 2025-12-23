@@ -1,4 +1,4 @@
-use pinocchio::{account_info::{AccountInfo, Ref, RefMut}, program_error::ProgramError, pubkey::Pubkey, *};
+use pinocchio::{account_info::{AccountInfo, Ref, RefMut}, program_error::ProgramError, *};
 
 pub trait AccountData: Sized {
     const SIZE: usize;

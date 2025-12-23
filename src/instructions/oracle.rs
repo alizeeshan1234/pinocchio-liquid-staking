@@ -1,11 +1,11 @@
-use pinocchio::{account_info::AccountInfo, instruction::Signer, program_error::ProgramError, pubkey::Pubkey, sysvars::{clock::Clock, rent::Rent, Sysvar}, *};
+use pinocchio::{account_info::AccountInfo, instruction::Signer, program_error::ProgramError, sysvars::{clock::Clock, rent::Rent, Sysvar}, *};
 use pinocchio_system::instructions::CreateAccount;
 use pinocchio_log::log;
 use crate::states::{oracle_config::OracleConfigInfo, helper::AccountData};
 
 pub fn process_init_oracle_config(accounts: &[AccountInfo], instruction_data: &[u8]) -> ProgramResult {
 
-    let [oracle_authority, oracle_config_account, price_feed_account, system_program] = accounts else {
+    let [oracle_authority, oracle_config_account, price_feed_account] = accounts else {
         return Err(ProgramError::NotEnoughAccountKeys);
     };
 

@@ -16,7 +16,6 @@ pub fn process_emergency_withdraw(accounts: &[AccountInfo], instruction_data: &[
         user_stake_account,     // User's stake position account
         user_lst_token_account, // User's LST token account
         treasury_account,       // Treasury account for penalty collection
-        token_program,          // Token program
     ] = accounts else {
         return Err(ProgramError::InvalidAccountData);
     };
@@ -84,7 +83,6 @@ pub fn process_emergency_withdraw(accounts: &[AccountInfo], instruction_data: &[
     let emergency_penalty = calculate_emergency_penalty(
         underlying_tokens,
         &staking_pool,
-        &global_config
     )?;
 
     let tokens_after_penalty = underlying_tokens.saturating_sub(emergency_penalty);
@@ -92,7 +90,6 @@ pub fn process_emergency_withdraw(accounts: &[AccountInfo], instruction_data: &[
     // Validate accounts
     let user_token_info = TokenAccount::from_account_info(user_token_account)?;
     let user_lst_token_info = TokenAccount::from_account_info(user_lst_token_account)?;
-    let treasury_info = TokenAccount::from_account_info(treasury_account)?;
 
     if *user_token_info.owner() != *user.key() {
         return Err(ProgramError::InvalidAccountData);
@@ -212,7 +209,7 @@ fn check_emergency_conditions(
 fn calculate_emergency_penalty(
     amount: u64,
     pool: &StakingPool,
-    global_config: &GlobalConfig
+
 ) -> Result<u64, ProgramError> {
     // Emergency penalty is typically higher than normal early withdrawal
     // You might have different penalty rates for different emergency types
@@ -234,7 +231,7 @@ fn calculate_emergency_penalty(
 }
 
 // Check for slashing events
-fn has_slashing_event(pool: &StakingPool) -> Result<bool, ProgramError> {
+fn has_slashing_event(_pool: &StakingPool) -> Result<bool, ProgramError> {
     // Implement your slashing detection logic here
     // This might check various conditions like:
     // - Validator misbehavior

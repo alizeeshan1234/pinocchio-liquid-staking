@@ -1,0 +1,380 @@
+warning: the cargo feature `edition2021` has been stabilized in the 1.56 release and is no longer necessary to be listed in the manifest
+  See https://doc.rust-lang.org/nightly/cargo/reference/manifest.html#the-edition-field for more information about using this feature.
+   0.125347042s  INFO prepare_target{force=false package_id=staking-platform v0.1.0 (/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking) target="staking_platform"}: cargo::core::compiler::fingerprint: stale: changed "/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/src/lib.rs"
+   0.125356750s  INFO prepare_target{force=false package_id=staking-platform v0.1.0 (/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking) target="staking_platform"}: cargo::core::compiler::fingerprint:           (vs) "/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/staking-platform-3cfae9a9251c0334/dep-lib-staking_platform"
+   0.125360375s  INFO prepare_target{force=false package_id=staking-platform v0.1.0 (/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking) target="staking_platform"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 1766486597, nanos: 131522621 } < FileTime { seconds: 1766486602, nanos: 87367360 }
+   0.125422333s  INFO prepare_target{force=false package_id=staking-platform v0.1.0 (/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking) target="staking_platform"}: cargo::core::compiler::fingerprint: fingerprint dirty for staking-platform v0.1.0 (/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking)/Check { test: false }/TargetInner { name_inferred: true, ..: lib_target("staking_platform", ["cdylib", "lib"], "/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/src/lib.rs", Edition2021) }
+   0.125431458s  INFO prepare_target{force=false package_id=staking-platform v0.1.0 (/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking) target="staking_platform"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/staking-platform-3cfae9a9251c0334/dep-lib-staking_platform", reference_mtime: FileTime { seconds: 1766486597, nanos: 131522621 }, stale: "/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/src/lib.rs", stale_mtime: FileTime { seconds: 1766486602, nanos: 87367360 } }))
+   0.141506417s  INFO prepare_target{force=false package_id=staking-platform v0.1.0 (/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking) target="staking_platform"}: cargo::core::compiler::fingerprint: fingerprint error for staking-platform v0.1.0 (/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking)/Check { test: true }/TargetInner { name_inferred: true, ..: lib_target("staking_platform", ["cdylib", "lib"], "/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/src/lib.rs", Edition2021) }
+   0.141526708s  INFO prepare_target{force=false package_id=staking-platform v0.1.0 (/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking) target="staking_platform"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/staking-platform-2c20e1867b7a052e/test-lib-staking_platform`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   8: cargo::ops::cargo_compile::compile_ws
+   9: cargo::ops::cargo_compile::compile_with_exec
+  10: cargo::ops::cargo_compile::compile
+  11: cargo::commands::check::exec
+  12: <cargo::cli::Exec>::exec
+  13: cargo::main
+  14: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  15: std::rt::lang_start::<()>::{closure#0}
+  16: std::rt::lang_start_internal
+  17: _main
+   0.144847083s  INFO prepare_target{force=false package_id=mollusk-svm v0.4.2 target="mollusk_svm"}: cargo::core::compiler::fingerprint: fingerprint error for mollusk-svm v0.4.2/Check { test: false }/TargetInner { ..: lib_target("mollusk_svm", ["lib"], "/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/mollusk-svm-0.4.2/src/lib.rs", Edition2021) }
+   0.144853708s  INFO prepare_target{force=false package_id=mollusk-svm v0.4.2 target="mollusk_svm"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/mollusk-svm-c46e3fe4bc49abde/lib-mollusk_svm`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: cargo::core::compiler::compile
+   8: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   9: cargo::ops::cargo_compile::compile_ws
+  10: cargo::ops::cargo_compile::compile_with_exec
+  11: cargo::ops::cargo_compile::compile
+  12: cargo::commands::check::exec
+  13: <cargo::cli::Exec>::exec
+  14: cargo::main
+  15: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  16: std::rt::lang_start::<()>::{closure#0}
+  17: std::rt::lang_start_internal
+  18: _main
+   0.147986750s  INFO prepare_target{force=false package_id=agave-precompiles v2.3.9 target="agave_precompiles"}: cargo::core::compiler::fingerprint: fingerprint error for agave-precompiles v2.3.9/Check { test: false }/TargetInner { ..: lib_target("agave_precompiles", ["lib"], "/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/agave-precompiles-2.3.9/src/lib.rs", Edition2021) }
+   0.147991333s  INFO prepare_target{force=false package_id=agave-precompiles v2.3.9 target="agave_precompiles"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/agave-precompiles-605ddc56d08dc9c6/lib-agave_precompiles`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: cargo::core::compiler::compile
+   8: cargo::core::compiler::compile
+   9: <cargo::core::compiler::build_runner::BuildRunner>::compile
+  10: cargo::ops::cargo_compile::compile_ws
+  11: cargo::ops::cargo_compile::compile_with_exec
+  12: cargo::ops::cargo_compile::compile
+  13: cargo::commands::check::exec
+  14: <cargo::cli::Exec>::exec
+  15: cargo::main
+  16: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  17: std::rt::lang_start::<()>::{closure#0}
+  18: std::rt::lang_start_internal
+  19: _main
+   0.149333208s  INFO prepare_target{force=false package_id=openssl v0.10.73 target="openssl"}: cargo::core::compiler::fingerprint: fingerprint error for openssl v0.10.73/Check { test: false }/TargetInner { ..: lib_target("openssl", ["lib"], "/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-0.10.73/src/lib.rs", Edition2021) }
+   0.149337125s  INFO prepare_target{force=false package_id=openssl v0.10.73 target="openssl"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/openssl-9aff4dc2538f5da4/lib-openssl`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: cargo::core::compiler::compile
+   8: cargo::core::compiler::compile
+   9: cargo::core::compiler::compile
+  10: <cargo::core::compiler::build_runner::BuildRunner>::compile
+  11: cargo::ops::cargo_compile::compile_ws
+  12: cargo::ops::cargo_compile::compile_with_exec
+  13: cargo::ops::cargo_compile::compile
+  14: cargo::commands::check::exec
+  15: <cargo::cli::Exec>::exec
+  16: cargo::main
+  17: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  18: std::rt::lang_start::<()>::{closure#0}
+  19: std::rt::lang_start_internal
+  20: _main
+   0.149668042s  INFO prepare_target{force=false package_id=openssl v0.10.73 target="build-script-build"}: cargo::core::compiler::fingerprint: fingerprint error for openssl v0.10.73/RunCustomBuild/TargetInner { ..: custom_build_target("build-script-build", "/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-0.10.73/build.rs", Edition2021) }
+   0.149671833s  INFO prepare_target{force=false package_id=openssl v0.10.73 target="build-script-build"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/openssl-e98e8ac75d31cdf5/run-build-script-build-script-build`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::custom_build::build_work
+   7: cargo::core::compiler::compile
+   8: cargo::core::compiler::compile
+   9: cargo::core::compiler::compile
+  10: cargo::core::compiler::compile
+  11: cargo::core::compiler::compile
+  12: <cargo::core::compiler::build_runner::BuildRunner>::compile
+  13: cargo::ops::cargo_compile::compile_ws
+  14: cargo::ops::cargo_compile::compile_with_exec
+  15: cargo::ops::cargo_compile::compile
+  16: cargo::commands::check::exec
+  17: <cargo::cli::Exec>::exec
+  18: cargo::main
+  19: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  20: std::rt::lang_start::<()>::{closure#0}
+  21: std::rt::lang_start_internal
+  22: _main
+   0.149824542s  INFO prepare_target{force=false package_id=openssl-sys v0.9.109 target="build-script-main"}: cargo::core::compiler::fingerprint: fingerprint error for openssl-sys v0.9.109/RunCustomBuild/TargetInner { ..: custom_build_target("build-script-main", "/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-sys-0.9.109/build/main.rs", Edition2021) }
+   0.149827750s  INFO prepare_target{force=false package_id=openssl-sys v0.9.109 target="build-script-main"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/openssl-sys-1d73f49ac9446759/run-build-script-build-script-main`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::custom_build::build_work
+   7: cargo::core::compiler::compile
+   8: cargo::core::compiler::compile
+   9: cargo::core::compiler::compile
+  10: cargo::core::compiler::compile
+  11: cargo::core::compiler::compile
+  12: cargo::core::compiler::compile
+  13: <cargo::core::compiler::build_runner::BuildRunner>::compile
+  14: cargo::ops::cargo_compile::compile_ws
+  15: cargo::ops::cargo_compile::compile_with_exec
+  16: cargo::ops::cargo_compile::compile
+  17: cargo::commands::check::exec
+  18: <cargo::cli::Exec>::exec
+  19: cargo::main
+  20: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  21: std::rt::lang_start::<()>::{closure#0}
+  22: std::rt::lang_start_internal
+  23: _main
+   0.150056208s  INFO prepare_target{force=false package_id=openssl-sys v0.9.109 target="openssl_sys"}: cargo::core::compiler::fingerprint: fingerprint error for openssl-sys v0.9.109/Check { test: false }/TargetInner { ..: lib_target("openssl_sys", ["lib"], "/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-sys-0.9.109/src/lib.rs", Edition2021) }
+   0.150059250s  INFO prepare_target{force=false package_id=openssl-sys v0.9.109 target="openssl_sys"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/openssl-sys-6212c781e0d98922/lib-openssl_sys`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: cargo::core::compiler::compile
+   8: cargo::core::compiler::compile
+   9: cargo::core::compiler::compile
+  10: cargo::core::compiler::compile
+  11: <cargo::core::compiler::build_runner::BuildRunner>::compile
+  12: cargo::ops::cargo_compile::compile_ws
+  13: cargo::ops::cargo_compile::compile_with_exec
+  14: cargo::ops::cargo_compile::compile
+  15: cargo::commands::check::exec
+  16: <cargo::cli::Exec>::exec
+  17: cargo::main
+  18: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  19: std::rt::lang_start::<()>::{closure#0}
+  20: std::rt::lang_start_internal
+  21: _main
+   0.150679292s  INFO prepare_target{force=false package_id=solana-secp256r1-program v2.2.4 target="solana_secp256r1_program"}: cargo::core::compiler::fingerprint: fingerprint error for solana-secp256r1-program v2.2.4/Check { test: false }/TargetInner { ..: lib_target("solana_secp256r1_program", ["lib"], "/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-secp256r1-program-2.2.4/src/lib.rs", Edition2021) }
+   0.150684000s  INFO prepare_target{force=false package_id=solana-secp256r1-program v2.2.4 target="solana_secp256r1_program"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/solana-secp256r1-program-4ef26f48a1fcd2ac/lib-solana_secp256r1_program`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: cargo::core::compiler::compile
+   8: cargo::core::compiler::compile
+   9: cargo::core::compiler::compile
+  10: <cargo::core::compiler::build_runner::BuildRunner>::compile
+  11: cargo::ops::cargo_compile::compile_ws
+  12: cargo::ops::cargo_compile::compile_with_exec
+  13: cargo::ops::cargo_compile::compile
+  14: cargo::commands::check::exec
+  15: <cargo::cli::Exec>::exec
+  16: cargo::main
+  17: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  18: std::rt::lang_start::<()>::{closure#0}
+  19: std::rt::lang_start_internal
+  20: _main
+   0.158553458s  INFO prepare_target{force=false package_id=solana-sdk v2.3.1 target="solana_sdk"}: cargo::core::compiler::fingerprint: fingerprint error for solana-sdk v2.3.1/Check { test: false }/TargetInner { ..: lib_target("solana_sdk", ["cdylib", "rlib"], "/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-sdk-2.3.1/src/lib.rs", Edition2021) }
+   0.158568500s  INFO prepare_target{force=false package_id=solana-sdk v2.3.1 target="solana_sdk"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/solana-sdk-96046452a4bc32db/lib-solana_sdk`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: cargo::core::compiler::compile
+   8: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   9: cargo::ops::cargo_compile::compile_ws
+  10: cargo::ops::cargo_compile::compile_with_exec
+  11: cargo::ops::cargo_compile::compile
+  12: cargo::commands::check::exec
+  13: <cargo::cli::Exec>::exec
+  14: cargo::main
+  15: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  16: std::rt::lang_start::<()>::{closure#0}
+  17: std::rt::lang_start_internal
+  18: _main
+   0.160103667s  INFO prepare_target{force=false package_id=solana-client-traits v2.2.1 target="solana_client_traits"}: cargo::core::compiler::fingerprint: fingerprint error for solana-client-traits v2.2.1/Check { test: false }/TargetInner { ..: lib_target("solana_client_traits", ["lib"], "/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-client-traits-2.2.1/src/lib.rs", Edition2021) }
+   0.160108917s  INFO prepare_target{force=false package_id=solana-client-traits v2.2.1 target="solana_client_traits"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/solana-client-traits-b3f91ad21f4e866a/lib-solana_client_traits`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: cargo::core::compiler::compile
+   8: cargo::core::compiler::compile
+   9: <cargo::core::compiler::build_runner::BuildRunner>::compile
+  10: cargo::ops::cargo_compile::compile_ws
+  11: cargo::ops::cargo_compile::compile_with_exec
+  12: cargo::ops::cargo_compile::compile
+  13: cargo::commands::check::exec
+  14: <cargo::cli::Exec>::exec
+  15: cargo::main
+  16: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  17: std::rt::lang_start::<()>::{closure#0}
+  18: std::rt::lang_start_internal
+  19: _main
+   0.160784792s  INFO prepare_target{force=false package_id=solana-transaction v2.2.3 target="solana_transaction"}: cargo::core::compiler::fingerprint: fingerprint error for solana-transaction v2.2.3/Check { test: false }/TargetInner { ..: lib_target("solana_transaction", ["lib"], "/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-transaction-2.2.3/src/lib.rs", Edition2021) }
+   0.160788875s  INFO prepare_target{force=false package_id=solana-transaction v2.2.3 target="solana_transaction"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/solana-transaction-1e5499c143f4a8d9/lib-solana_transaction`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: cargo::core::compiler::compile
+   8: cargo::core::compiler::compile
+   9: cargo::core::compiler::compile
+  10: <cargo::core::compiler::build_runner::BuildRunner>::compile
+  11: cargo::ops::cargo_compile::compile_ws
+  12: cargo::ops::cargo_compile::compile_with_exec
+  13: cargo::ops::cargo_compile::compile
+  14: cargo::commands::check::exec
+  15: <cargo::cli::Exec>::exec
+  16: cargo::main
+  17: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  18: std::rt::lang_start::<()>::{closure#0}
+  19: std::rt::lang_start_internal
+  20: _main
+   0.161241792s  INFO prepare_target{force=false package_id=solana-precompiles v2.2.2 target="solana_precompiles"}: cargo::core::compiler::fingerprint: fingerprint error for solana-precompiles v2.2.2/Check { test: false }/TargetInner { ..: lib_target("solana_precompiles", ["lib"], "/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-precompiles-2.2.2/src/lib.rs", Edition2021) }
+   0.161246792s  INFO prepare_target{force=false package_id=solana-precompiles v2.2.2 target="solana_precompiles"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/solana-precompiles-de7788781104189e/lib-solana_precompiles`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: cargo::core::compiler::compile
+   8: cargo::core::compiler::compile
+   9: cargo::core::compiler::compile
+  10: cargo::core::compiler::compile
+  11: <cargo::core::compiler::build_runner::BuildRunner>::compile
+  12: cargo::ops::cargo_compile::compile_ws
+  13: cargo::ops::cargo_compile::compile_with_exec
+  14: cargo::ops::cargo_compile::compile
+  15: cargo::commands::check::exec
+  16: <cargo::cli::Exec>::exec
+  17: cargo::main
+  18: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  19: std::rt::lang_start::<()>::{closure#0}
+  20: std::rt::lang_start_internal
+  21: _main
+   0.162514000s  INFO prepare_target{force=false package_id=solana-system-transaction v2.2.1 target="solana_system_transaction"}: cargo::core::compiler::fingerprint: fingerprint error for solana-system-transaction v2.2.1/Check { test: false }/TargetInner { ..: lib_target("solana_system_transaction", ["lib"], "/Users/mohammedzeeshan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-system-transaction-2.2.1/src/lib.rs", Edition2021) }
+   0.162517667s  INFO prepare_target{force=false package_id=solana-system-transaction v2.2.1 target="solana_system_transaction"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking/target/debug/.fingerprint/solana-system-transaction-5b843be307dc6f01/lib-solana_system_transaction`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: cargo::core::compiler::compile
+   8: cargo::core::compiler::compile
+   9: <cargo::core::compiler::build_runner::BuildRunner>::compile
+  10: cargo::ops::cargo_compile::compile_ws
+  11: cargo::ops::cargo_compile::compile_with_exec
+  12: cargo::ops::cargo_compile::compile
+  13: cargo::commands::check::exec
+  14: <cargo::cli::Exec>::exec
+  15: cargo::main
+  16: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  17: std::rt::lang_start::<()>::{closure#0}
+  18: std::rt::lang_start_internal
+  19: _main
+   Compiling openssl-sys v0.9.109
+    Checking staking-platform v0.1.0 (/Users/mohammedzeeshan/Desktop/pinocchio/pinocchio-liquid-staking/pinocchio-liquid-staking)
+   Compiling openssl v0.10.73
+    Checking solana-secp256r1-program v2.2.4
+    Checking solana-precompiles v2.2.2
+    Checking agave-precompiles v2.3.9
+    Checking solana-transaction v2.2.3
+    Checking mollusk-svm v0.4.2
+    Checking solana-client-traits v2.2.1
+    Checking solana-system-transaction v2.2.1
+    Checking solana-sdk v2.3.1
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 27.49s

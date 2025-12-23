@@ -15,7 +15,6 @@ pub fn process_increase_stake(accounts: &[AccountInfo], instruction_data: &[u8])
         user_token_account,
         user_stake_account,
         user_lst_token_account,
-        token_program
     ] = accounts else {
         return Err(ProgramError::InvalidAccountData);
     };

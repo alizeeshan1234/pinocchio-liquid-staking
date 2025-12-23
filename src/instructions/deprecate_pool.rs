@@ -1,4 +1,4 @@
-use pinocchio::{account_info::AccountInfo, instruction::Signer, program_error::ProgramError, sysvars::{rent::Rent, Sysvar}, *};
+use pinocchio::{account_info::AccountInfo,  program_error::ProgramError, *};
 
 use crate::states::{helper::AccountData, staking_pool_account::{PoolStatusEnum, StakingPool}};
 

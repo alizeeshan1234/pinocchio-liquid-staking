@@ -18,8 +18,7 @@ pub fn process_claim_rewards(accounts: &[AccountInfo], instruction_data: &[u8]) 
         staking_pool_account,      // Pool account
         user_reward_token_account, // User's reward token account
         user_stake_account,        // User's stake position account
-        treasury_account,          // Treasury for protocol fees
-        token_program,             // Token program
+        treasury_account,          // Treasury for protocol fees  
     ] = accounts else {
         return Err(ProgramError::InvalidAccountData);
     };
@@ -96,7 +95,7 @@ pub fn process_claim_rewards(accounts: &[AccountInfo], instruction_data: &[u8]) 
     // Validate accounts
     let user_reward_token_info = TokenAccount::from_account_info(user_reward_token_account)?;
     let reward_vault_info = TokenAccount::from_account_info(reward_token_vault)?;
-    let treasury_info = TokenAccount::from_account_info(treasury_account)?;
+    let _treasury_info = TokenAccount::from_account_info(treasury_account)?;
 
     if *user_reward_token_info.owner() != *user.key() {
         return Err(ProgramError::InvalidAccountData);
@@ -177,8 +176,8 @@ pub fn process_claim_all_rewards(accounts: &[AccountInfo], _instruction_data: &[
         global_config_account,
         user_reward_token_account,
         user_stake_account,
-        treasury_account,
-        token_program,
+        _treasury_account,
+        _token_program,
     ] = accounts else {
         return Err(ProgramError::InvalidAccountData);
     };

@@ -1,6 +1,4 @@
-use std::default;
-
-use pinocchio::{program_error::ProgramError, pubkey::Pubkey, *};
+use pinocchio::{program_error::ProgramError, pubkey::Pubkey};
 use crate::states::helper::AccountData;
 
 pub const MAX_POSITIONS: usize = 10;

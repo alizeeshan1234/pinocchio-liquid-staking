@@ -1,7 +1,7 @@
 use pinocchio::{account_info::AccountInfo, program_error::ProgramError, instruction::Signer, sysvars::{clock::Clock, Sysvar}, *};
 use pinocchio_token::{state::{TokenAccount, Mint}, instructions::{TransferChecked, BurnChecked}};
 
-use crate::states::{helper::AccountData, staking_pool_account::StakingPool, user_stake_account::UserStakeAccount, global_config::GlobalConfig};
+use crate::states::{helper::AccountData, staking_pool_account::StakingPool, user_stake_account::UserStakeAccount};
 
 pub fn process_unstake(accounts: &[AccountInfo], instruction_data: &[u8]) -> ProgramResult {
     let [
@@ -15,7 +15,6 @@ pub fn process_unstake(accounts: &[AccountInfo], instruction_data: &[u8]) -> Pro
         user_token_account,     
         user_stake_account,     
         user_lst_token_account, 
-        token_program,          
     ] = accounts else {
         return Err(ProgramError::InvalidAccountData);
     };
@@ -49,7 +48,6 @@ pub fn process_unstake(accounts: &[AccountInfo], instruction_data: &[u8]) -> Pro
         return Err(ProgramError::InvalidAccountData);
     }
 
-    let global_config = GlobalConfig::from_account_info(global_config_account)?;
     let mut staking_pool = StakingPool::from_account_info_mut(staking_pool_account)?;
     let mut user_stake = UserStakeAccount::from_account_info_mut(user_stake_account)?;
 
@@ -82,7 +80,7 @@ pub fn process_unstake(accounts: &[AccountInfo], instruction_data: &[u8]) -> Pro
 
     // Validate token accounts
     let user_token_info = TokenAccount::from_account_info(user_token_account)?;
-    let stake_vault_info = TokenAccount::from_account_info(stake_token_vault)?;
+
     let user_lst_token_info = TokenAccount::from_account_info(user_lst_token_account)?;
 
     if *user_token_info.owner() != *user.key() {

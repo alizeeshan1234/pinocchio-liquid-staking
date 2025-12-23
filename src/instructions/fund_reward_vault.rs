@@ -1,6 +1,6 @@
 use pinocchio::{account_info::AccountInfo, program_error::ProgramError ,*};
 use pinocchio_token::{instructions::TransferChecked, state::{Mint, TokenAccount}};
-use crate::states::{global_config::GlobalConfig, helper::AccountData, staking_pool_account::StakingPool};
+use crate::states::{helper::AccountData, staking_pool_account::StakingPool};
 
 pub fn process_fund_reward_vault(accounts: &[AccountInfo], instruction_data: &[u8]) -> ProgramResult {
 
@@ -10,7 +10,6 @@ pub fn process_fund_reward_vault(accounts: &[AccountInfo], instruction_data: &[u
         reward_token_mint,
         reward_token_vault,
         staking_pool_account,
-        token_program
     ] = accounts else {
         return Err(ProgramError::InvalidAccountData);
     };

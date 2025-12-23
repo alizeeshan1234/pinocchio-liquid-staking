@@ -6,7 +6,7 @@ use crate::states::{global_config::GlobalConfig, helper::AccountData};
 
 pub fn process_initialize_global_config(accounts: &[AccountInfo], instruction_data: &[u8]) -> ProgramResult {
     
-    let [authority, mint, global_config_account, treasury_account, system_program, token_program] = accounts else {
+    let [authority, mint, global_config_account, treasury_account] = accounts else {
         return Err(ProgramError::InvalidAccountData);
     };
 

@@ -8,4 +8,3 @@ cargo:rustc-check-cfg=cfg(no_serde_derive)
 cargo:rustc-check-cfg=cfg(no_std_atomic)
 cargo:rustc-check-cfg=cfg(no_std_atomic64)
 cargo:rustc-check-cfg=cfg(no_target_has_atomic)
-cargo:rustc-cfg=no_core_error

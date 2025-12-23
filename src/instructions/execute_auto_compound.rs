@@ -18,21 +18,18 @@ use crate::states::{
 };
 
 pub fn process_execute_auto_compound(accounts: &[AccountInfo], instruction_data: &[u8]) -> ProgramResult {
-    let [
-        executor,                  
+    let [     
         position_owner,            
         authority,                 
         reward_token_mint,         
         stake_token_mint,          
-        reward_token_vault,        
-        stake_token_vault,          
+        reward_token_vault,            
         liquid_stake_mint,          
         global_config_account,      
         staking_pool_account,       
         user_stake_account,         
         user_lst_token_account,     
-        treasury_account,           
-        token_program,              
+        treasury_account,               
     ] = accounts else {
         return Err(ProgramError::InvalidAccountData);
     };

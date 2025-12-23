@@ -1,7 +1,7 @@
-use pinocchio::{account_info::AccountInfo, instruction::Signer, program_error::ProgramError, pubkey::Pubkey, sysvars::{clock::Clock, rent::Rent, Sysvar}, *};
+use pinocchio::{account_info::AccountInfo, instruction::Signer, program_error::ProgramError, sysvars::{clock::Clock, rent::Rent, Sysvar}, *};
 use pinocchio_system::instructions::CreateAccount;
 use pinocchio_token::{instructions::{InitializeAccount3, InitializeMint2}, state::{Mint, TokenAccount}};
-use crate::states::{global_config::GlobalConfig, helper::AccountData, staking_pool_account::{PoolStatusEnum, SlashTypeEnum, StakingPool}};
+use crate::states::{global_config::GlobalConfig, helper::AccountData, staking_pool_account::StakingPool};
 
 const MAX_POOLS: usize = 10;
 
@@ -17,8 +17,6 @@ pub fn process_create_staking_pool(accounts: &[AccountInfo], instruction_data: &
         global_config_account, 
         liquid_stake_mint, 
         price_feed_account,
-        system_program,
-        token_program,
     ] = accounts else {
         return Err(ProgramError::InvalidAccountData);
     };
